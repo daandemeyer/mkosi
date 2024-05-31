@@ -1068,15 +1068,6 @@ def run_qemu(args: Args, config: Config) -> None:
             ]
             kcl += [f"systemd.mount-extra=LABEL=scratch:/var/tmp:{config.distribution.filesystem()}"]
 
-        if config.output_format == OutputFormat.cpio:
-            cmdline += ["-initrd", fname]
-        elif (
-            kernel and KernelType.identify(config, kernel) != KernelType.uki and
-            "-initrd" not in args.cmdline and
-            (config.output_dir_or_cwd() / config.output_split_initrd).exists()
-        ):
-            cmdline += ["-initrd", config.output_dir_or_cwd() / config.output_split_initrd]
-
         if config.output_format in (OutputFormat.disk, OutputFormat.esp):
             cache = f"cache.writeback=on,cache.direct=on,cache.no-flush={yes_no(config.ephemeral)},aio=io_uring"
             cmdline += ["-drive", f"if=none,id=mkosi,file={fname},format=raw,discard=on,{cache}",
@@ -1120,12 +1111,41 @@ def run_qemu(args: Args, config: Config) -> None:
             elif kernel:
                 kcl += [f"systemd.set_credential_binary={k}:{payload}"]
 
+        if config.output_format == OutputFormat.cpio:
+            initrd = fname.read_bytes()
+        elif (
+            kernel and KernelType.identify(config, kernel) != KernelType.uki and
+            "-initrd" not in args.cmdline and
+            (config.output_dir_or_cwd() / config.output_split_initrd).exists()
+        ):
+            initrd = (config.output_dir_or_cwd() / config.output_split_initrd).read_bytes()
+        else:
+            initrd = b''
+
+        if config.bootconfig:
+            bootconfig = config.bootconfig.read_bytes()
+
+            while len(bootconfig) % 4 != 0:
+                bootconfig += b"\0"
+
+            initrd += bootconfig
+            initrd += struct.pack("<I", len(bootconfig))
+            initrd += struct.pack("<I", sum(bootconfig))
+            initrd += b"#BOOTCONFIG\n"
+
+        if initrd:
+            tmp = stack.enter_context(tempfile.NamedTemporaryFile(prefix="mkosi-initrd-"))
+            tmp.write(initrd)
+            tmp.flush()
+            cmdline += ["-initrd", tmp.name]
+
         if (
             kernel and
             (
                 KernelType.identify(config, kernel) != KernelType.uki or
                 not config.architecture.supports_smbios(firmware)
             )
+            and kcl
         ):
             cmdline += ["-append", " ".join(kcl)]
         elif config.architecture.supports_smbios(firmware):
