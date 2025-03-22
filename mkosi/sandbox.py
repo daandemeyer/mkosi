@@ -1,3 +1,4 @@
+#!/usr/bin/env -S python3 -SI
 # SPDX-License-Identifier: LGPL-2.1-or-later
 
 """
@@ -708,13 +709,18 @@ class DevOperation(FSOperation):
         # /dev/null fails with EACCESS for unknown reasons.
         mount("tmpfs", dst, "tmpfs", 0, "mode=0755")
 
-        for node in ("null", "zero", "full", "random", "urandom", "tty", "fuse"):
+        for node in ("null", "zero", "full", "random", "urandom", "tty", "fuse", "pts", "ptmx"):
             nsrc = joinpath(oldroot, "dev", node)
-            if node == "fuse" and not os.path.exists(nsrc):
+            if node in ("fuse", "ptmx") and not os.path.exists(nsrc):
                 continue
 
+            isdir = not os.path.islink(nsrc) and os.path.isdir(nsrc)
             ndst = joinpath(dst, node)
-            os.close(os.open(ndst, os.O_CREAT | os.O_CLOEXEC | os.O_EXCL))
+            with umask(~0o755 if isdir else ~0o644):
+                if isdir:
+                    os.mkdir(ndst)
+                else:
+                    os.close(os.open(ndst, os.O_CREAT | os.O_CLOEXEC | os.O_EXCL))
 
             mount(nsrc, ndst, "", MS_BIND, "")
 
@@ -726,12 +732,6 @@ class DevOperation(FSOperation):
 
         with umask(~0o1777):
             os.mkdir(joinpath(dst, "shm"), mode=0o1777)
-        with umask(~0o755):
-            os.mkdir(joinpath(dst, "pts"))
-
-        mount("devpts", joinpath(dst, "pts"), "devpts", 0, "newinstance,ptmxmode=0666,mode=620")
-
-        os.symlink("pts/ptmx", joinpath(dst, "ptmx"))
 
         if self.ttyname:
             os.close(os.open(joinpath(dst, "console"), os.O_CREAT | os.O_CLOEXEC | os.O_EXCL))
