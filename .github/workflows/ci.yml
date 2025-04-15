@@ -201,6 +201,11 @@ jobs:
           KVM=yes
           EOF
 
+          tee mkosi.tools.conf/mkosi.local.conf <<EOF
+          [Distribution]
+          Distribution=${{ matrix.tools }}
+          EOF
+
           # TODO: Remove once all distros have recent enough systemd that knows systemd.default_device_timeout_sec.
           mkdir -p mkosi-initrd/mkosi.extra/usr/lib/systemd/system.conf.d
           tee mkosi-initrd/mkosi.extra/usr/lib/systemd/system.conf.d/device-timeout.conf <<EOF

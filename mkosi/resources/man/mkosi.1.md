@@ -1361,48 +1361,6 @@ boolean argument: either `1`, `yes`, or `true` to enable, or `0`, `no`,
 
     See the **TOOLS TREE** section for further details.
 
-`ToolsTreeDistribution=`, `--tools-tree-distribution=`
-:   Set the distribution to use for the default tools tree. Defaults to the host distribution except for
-    Ubuntu, which defaults to Debian, and RHEL, CentOS, Alma and Rocky, which default to Fedora, or `custom`
-    if the distribution of the host is not a supported distribution.
-
-`ToolsTreeRelease=`, `--tools-tree-release=`
-:   Set the distribution release to use for the default tools tree. By
-    default, the hardcoded default release in **mkosi** for the distribution
-    is used.
-
-`ToolsTreeProfiles=`, `--tools-tree-profile=`
-:   Set the profiles to enable for the default tools tree. Takes a
-    comma-delimited list consisting of `devel`, `misc`,
-    `package-manager` and `runtime`. By default, all profiles except
-    `devel` are enabled.
-
-    The `devel` profile contains tools required to build (C/C++)
-    projects. The `misc` profile contains various useful tools that are
-    handy to have available in scripts. The package manager profile
-    contains package managers and related tools other than those native
-    to the tools tree distribution. The `runtime` profile contains the
-    tools required to boot images in a systemd-nspawn container or in a
-    virtual machine.
-
-`ToolsTreeMirror=`, `--tools-tree-mirror=`
-:   Set the mirror to use for the default tools tree. By default, the
-    default mirror for the tools tree distribution is used.
-
-`ToolsTreeRepositories=`, `--tools-tree-repository=`
-:   Same as `Repositories=` but for the default tools tree.
-
-`ToolsTreeSandboxTrees=`, `--tools-tree-sandbox-tree=`
-:   Same as `SandboxTrees=` but for the default tools tree.
-
-`ToolsTreePackages=`, `--tools-tree-package=`
-:   Extra packages to install into the default tools tree. Takes a comma
-    separated list of package specifications. This option may be used
-    multiple times in which case the specified package lists are combined.
-
-`ToolsTreePackageDirectories=`, `--tools-tree-package-directory=`
-:   Same as `PackageDirectories=`, but for the default tools tree.
-
 `ToolsTreeCertificates=`, `--tools-tree-certificates=`
 :   Specify whether to use certificates and keys from the tools tree.
     Enabled by default. If enabled, `/etc/pki/ca-trust`, `/etc/pki/tls`,
@@ -2063,12 +2021,6 @@ boolean argument: either `1`, `yes`, or `true` to enable, or `0`, `no`,
 :   Matches against the host's native architecture. See the
     `Architecture=` setting for a list of possible values.
 
-`ToolsTreeDistribution=`
-:   Matches against the configured tools tree distribution.
-
-`ToolsTreeRelease=`
-:   Matches against the configured tools tree release.
-
 `Environment=`
 :   Matches against a specific key/value pair configured with
     `Environment=`. If no value is provided, check if the given key is in
@@ -2100,8 +2052,6 @@ config file is read:
 | `SystemdVersion=`        | no    | yes              | n/a                                                                                    |
 | `BuildSources=`          | no    | no               | match fails                                                                            |
 | `HostArchitecture=`      | no    | no               | n/a                                                                                    |
-| `ToolsTreeDistribution=` | no    | no               | match the fallback tools tree distribution (see `ToolsTreeDistribution=` in `[Build]`) |
-| `ToolsTreeRelease=`      | no    | no               | match default tools tree release                                                       |
 | `Environment=`           | no    | no               | n/a                                                                                    |
 | `Image=`                 | no    | no               | n/a                                                                                    |
 
@@ -3005,14 +2955,6 @@ the main image but which are not passed down to subimages:
 
 - `MinimumVersion=`
 - `PassEnvironment=`
-- `ToolsTreeDistribution=`
-- `ToolsTreeRelease=`
-- `ToolsTreeProfiles=`
-- `ToolsTreeMirror=`
-- `ToolsTreeRepositories=`
-- `ToolsTreeSandboxTrees=`
-- `ToolsTreePackages=`
-- `ToolsTreePackageDirectories=`
 - `History=`
 - Every setting in the `[Runtime]` section
 

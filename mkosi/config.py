@@ -1024,31 +1024,18 @@ def config_default_release(namespace: dict[str, Any]) -> str:
     return cast(str, namespace["distribution"].default_release())
 
 
-def config_default_tools_tree_distribution(namespace: dict[str, Any]) -> Distribution:
-    if d := os.getenv("MKOSI_HOST_DISTRIBUTION"):
-        return Distribution(d).default_tools_tree_distribution()
-
-    detected = detect_distribution()[0]
-
-    if not detected:
-        return Distribution.custom
-
-    return detected.default_tools_tree_distribution()
+def needs_repository_key_fetch_on_ubuntu(distribution: Distribution) -> bool:
+    return distribution == Distribution.arch or distribution.is_rpm_distribution()
 
 
 def config_default_repository_key_fetch(namespace: dict[str, Any]) -> bool:
-    def needs_repository_key_fetch(distribution: Distribution) -> bool:
-        return distribution == Distribution.arch or distribution.is_rpm_distribution()
-
     if namespace["tools_tree"] != Path("default"):
         return (
             detect_distribution(namespace["tools_tree"] or Path("/"))[0] == Distribution.ubuntu
-            and needs_repository_key_fetch(namespace["distribution"])
+            and needs_repository_key_fetch_on_ubuntu(namespace["distribution"])
         )  # fmt: skip
 
-    return namespace["tools_tree_distribution"] == Distribution.ubuntu and needs_repository_key_fetch(
-        namespace["distribution"]
-    )
+    return False
 
 
 def config_default_source_date_epoch(namespace: dict[str, Any]) -> Optional[int]:
@@ -2642,6 +2629,7 @@ SETTINGS: list[ConfigSetting[Any]] = [
         choices=Distribution.choices(),
         help="Distribution to install",
         scope=SettingScope.universal,
+        tools=True,
     ),
     ConfigSetting(
         dest="release",
@@ -2654,6 +2642,7 @@ SETTINGS: list[ConfigSetting[Any]] = [
         default_factory_depends=("distribution",),
         help="Distribution release to install",
         scope=SettingScope.universal,
+        tools=True,
     ),
     ConfigSetting(
         dest="architecture",
@@ -2672,6 +2661,7 @@ SETTINGS: list[ConfigSetting[Any]] = [
         section="Distribution",
         help="Distribution mirror to use",
         scope=SettingScope.universal,
+        tools=True,
     ),
     ConfigSetting(
         dest="local_mirror",
@@ -2687,12 +2677,13 @@ SETTINGS: list[ConfigSetting[Any]] = [
         parse=config_parse_boolean,
         help="Controls signature and key checks on repositories",
         scope=SettingScope.multiversal,
+        tools=True,
     ),
     ConfigSetting(
         dest="repository_key_fetch",
         metavar="BOOL",
         section="Distribution",
-        default_factory_depends=("distribution", "tools_tree", "tools_tree_distribution"),
+        default_factory_depends=("distribution", "tools_tree"),
         default_factory=config_default_repository_key_fetch,
         parse=config_parse_boolean,
         help="Controls whether distribution GPG keys can be fetched remotely",
@@ -3579,89 +3570,6 @@ SETTINGS: list[ConfigSetting[Any]] = [
         path_suffixes=("tools",),
         help="Look up programs to execute inside the given tree",
         scope=SettingScope.universal,
-    ),
-    ConfigSetting(
-        dest="tools_tree_distribution",
-        section="Build",
-        parse=config_make_enum_parser(Distribution),
-        match=config_make_enum_matcher(Distribution),
-        choices=Distribution.choices(),
-        default_factory=config_default_tools_tree_distribution,
-        help="Set the distribution to use for the default tools tree",
-        scope=SettingScope.tools,
-    ),
-    ConfigSetting(
-        dest="tools_tree_release",
-        metavar="RELEASE",
-        section="Build",
-        parse=config_parse_string,
-        match=config_make_string_matcher(),
-        default_factory_depends=("tools_tree_distribution",),
-        default_factory=lambda ns: d.default_release() if (d := ns["tools_tree_distribution"]) else None,
-        help="Set the release to use for the default tools tree",
-        scope=SettingScope.tools,
-    ),
-    ConfigSetting(
-        dest="tools_tree_profiles",
-        long="--tools-tree-profile",
-        metavar="PROFILE",
-        section="Build",
-        parse=config_make_list_parser(delimiter=","),
-        choices=ToolsTreeProfile.values(),
-        default=[str(s) for s in ToolsTreeProfile.default()],
-        help="Which profiles to enable for the default tools tree",
-        scope=SettingScope.tools,
-    ),
-    ConfigSetting(
-        dest="tools_tree_mirror",
-        metavar="MIRROR",
-        section="Build",
-        default_factory_depends=("distribution", "mirror", "tools_tree_distribution"),
-        default_factory=(
-            lambda ns: ns["mirror"]
-            if ns["mirror"] and ns["distribution"] == ns["tools_tree_distribution"]
-            else None
-        ),
-        help="Set the mirror to use for the default tools tree",
-        scope=SettingScope.tools,
-    ),
-    ConfigSetting(
-        dest="tools_tree_repositories",
-        long="--tools-tree-repository",
-        metavar="REPOS",
-        section="Build",
-        parse=config_make_list_parser(delimiter=","),
-        help="Repositories to use for the default tools tree",
-        scope=SettingScope.tools,
-    ),
-    ConfigSetting(
-        dest="tools_tree_sandbox_trees",
-        long="--tools-tree-sandbox-tree",
-        compat_names=("ToolsTreePackageManagerTrees",),
-        compat_longs=("--tools-tree-package-manager-tree",),
-        metavar="PATH",
-        section="Build",
-        parse=config_make_list_parser(delimiter=",", parse=make_tree_parser(required=True)),
-        help="Sandbox trees for the default tools tree",
-        scope=SettingScope.tools,
-    ),
-    ConfigSetting(
-        dest="tools_tree_packages",
-        long="--tools-tree-package",
-        metavar="PACKAGE",
-        section="Build",
-        parse=config_make_list_parser(delimiter=","),
-        help="Add additional packages to the default tools tree",
-        scope=SettingScope.tools,
-    ),
-    ConfigSetting(
-        dest="tools_tree_package_directories",
-        long="--tools-tree-package-directory",
-        metavar="PATH",
-        section="Build",
-        parse=config_make_list_parser(delimiter=",", parse=make_path_parser()),
-        help="Specify a directory containing extra tools tree packages",
-        scope=SettingScope.tools,
     ),
     ConfigSetting(
         dest="tools_tree_certificates",
@@ -5010,8 +4918,19 @@ def have_history(args: Args) -> bool:
     return Path(".mkosi-private/history/latest.json").exists()
 
 
+def default_tools_tree_distribution() -> Distribution:
+    if d := os.getenv("MKOSI_HOST_DISTRIBUTION"):
+        return Distribution(d).default_tools_tree_distribution()
+
+    detected = detect_distribution()[0]
+
+    if not detected:
+        return Distribution.custom
+
+    return detected.default_tools_tree_distribution()
+
+
 def finalize_default_tools(
-    main: ParseContext,
     finalized: dict[str, Any],
     *,
     configdir: Optional[Path],
@@ -5022,25 +4941,10 @@ def finalize_default_tools(
     for s in SETTINGS:
         if s.scope == SettingScope.multiversal:
             context.cli[s.dest] = copy.deepcopy(finalized[s.dest])
-        elif s.scope == SettingScope.tools:
-            # If the setting was specified on the CLI for the main config, we treat it as specified on the
-            # CLI for the tools tree as well. Idem for config and defaults.
-            dest = s.dest.removeprefix("tools_tree_")
-
-            if s.dest in main.cli:
-                ns = context.cli
-                if f"{s.dest}_was_none" in main.cli:
-                    ns[f"{dest}_was_none"] = main.cli[f"{s.dest}_was_none"]
-            elif s.dest in main.config:
-                ns = context.config
-            else:
-                ns = context.defaults
-
-            ns[dest] = copy.deepcopy(finalized[s.dest])
 
     context.cli["output_format"] = OutputFormat.directory
 
-    context.config |= {
+    context.config = {
         "image": "tools",
         "directory": finalized["directory"],
         "files": [],
@@ -5051,6 +4955,13 @@ def finalize_default_tools(
         for name in finalized.get("environment", {}).keys() & finalized.get("pass_environment", [])
     }
 
+    d = default_tools_tree_distribution()
+    context.defaults = {
+        "distribution": d,
+        "release": d.default_release(),
+        "profiles": [str(s) for s in ToolsTreeProfile.default()],
+    }
+
     if configdir and (p := configdir / "mkosi.tools.conf").exists():
         with chdir(p if p.is_dir() else Path.cwd()):
             context.parse_config_one(p, parse_profiles=p.is_dir(), parse_local=p.is_dir())
@@ -5058,7 +4969,12 @@ def finalize_default_tools(
     with chdir(resources / "mkosi-tools"):
         context.parse_config_one(resources / "mkosi-tools", parse_profiles=True)
 
-    return Config.from_dict(context.finalize())
+    config = context.finalize()
+
+    if config["distribution"] == finalized["distribution"] and not any("mirror" in c for c in (context.cli, context.config)):
+        config["mirror"] = finalized["mirror"]
+
+    return Config.from_dict(config)
 
 
 def finalize_configdir(directory: Optional[Path]) -> Optional[Path]:
@@ -5210,6 +5126,12 @@ def parse_config(
         else:
             tools = finalize_default_tools(context, config, configdir=configdir, resources=resources)
             config["tools_tree"] = tools.output_dir_or_cwd() / tools.output
+
+        if not any("repository_key_fetch" in c for c in (context.cli, context.config)):
+            config["repository_key_fetch"] = (
+                tools.distribution == Distribution.ubuntu
+                and needs_repository_key_fetch_on_ubuntu(config["distribution"])
+            )
 
     images = []
 

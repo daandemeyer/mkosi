@@ -19,6 +19,7 @@ from mkosi.config import (
     ConfigFeature,
     ConfigTree,
     OutputFormat,
+    ToolsTreeProfile,
     Verb,
     config_parse_bytes,
     in_box,
@@ -1515,6 +1516,8 @@ def test_tools(tmp_path: Path) -> None:
         host = detect_distribution()[0]
         if host:
             assert tools.distribution == host.default_tools_tree_distribution()
+            assert tools.release == host.default_tools_tree_distribution().default_release()
+            assert tools.profiles == [str(p) for p in ToolsTreeProfile.default()]
 
         (d / "mkosi.tools.conf").write_text(
             f"""
@@ -1527,28 +1530,37 @@ def test_tools(tmp_path: Path) -> None:
         assert tools
         assert tools.package_directories == [Path(d)]
 
-        _, tools, _ = parse_config(
-            argv + ["--tools-tree-distribution=arch", "--tools-tree-package-directory=/tmp"],
-            resources=resources,
-        )
-        assert tools
-        assert tools.distribution == Distribution.arch
-        assert tools.package_directories == [Path(d), Path("/tmp")]
-
-        _, tools, _ = parse_config(argv + ["--tools-tree-package-directory="], resources=resources)
-        assert tools
-        assert tools.package_directories == []
-
         (d / "mkosi.conf").write_text(
             """
-            [Build]
-            ToolsTreeDistribution=arch
+            [Distribution]
+            Distribution=arch
+            Mirror=abc
             """
         )
 
-        _, tools, _ = parse_config(argv, resources=resources)
+        (d / "mkosi.tools.conf").write_text(
+            """
+            [Distribution]
+            Distribution=arch
+            """
+        )
+
+        _, tools, [config] = parse_config(argv, resources=resources)
+        assert config.distribution == Distribution.arch
+        assert config.mirror == "abc"
         assert tools
         assert tools.distribution == Distribution.arch
+        assert tools.mirror == "abc"
+
+        (d / "mkosi.tools.conf").write_text(
+            """
+            [Distribution]
+            Distribution=ubuntu
+            """
+        )
+
+        _, tools, [config] = parse_config(argv, resources=resources)
+        assert config.repository_key_fetch
 
 
 def test_subdir(tmp_path: Path) -> None:
