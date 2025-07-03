@@ -1098,6 +1098,19 @@ def register_machine(config: Config, pid: int, fname: Path, cid: Optional[int]) 
         )
 
 
+def qemu_open_fds(config: Config) -> dict[QemuDeviceNode, int]:
+    # After we unshare the user namespace to sandbox qemu, we might not have access to /dev/kvm or related
+    # device nodes anymore as access to these might be gated behind the kvm group and we won't be part of the
+    # kvm group anymore after unsharing the user namespace. To get around this, open all those device nodes
+    # early can pass them as file descriptors to qemu later. Note that we can't pass the kvm file descriptor
+    # to qemu until version 9.0.
+    return {
+        d: d.open()
+        for d in QemuDeviceNode
+        if d.feature(config) != ConfigFeature.disabled and d.available(log=True)
+    }
+
+
 def run_qemu(args: Args, config: Config) -> None:
     if config.output_format not in (
         OutputFormat.disk,
@@ -1131,17 +1144,7 @@ def run_qemu(args: Args, config: Config) -> None:
     ):
         die("SecureBootCertificate= must be configured to use FirmwareVariables=custom|microsoft-mok")
 
-    # After we unshare the user namespace to sandbox qemu, we might not have access to /dev/kvm or related
-    # device nodes anymore as access to these might be gated behind the kvm group and we won't be part of the
-    # kvm group anymore after unsharing the user namespace. To get around this, open all those device nodes
-    # early can pass them as file descriptors to qemu later. Note that we can't pass the kvm file descriptor
-    # to qemu until version 9.0.
-    qemu_device_fds = {
-        d: d.open()
-        for d in QemuDeviceNode
-        if d.feature(config) != ConfigFeature.disabled and d.available(log=True)
-    }
-
+    qemu_device_fds = qemu_open_fds(config)
     qemu = find_qemu_binary(config)
     qemuver = qemu_version(config, qemu)
 

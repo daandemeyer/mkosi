@@ -22,6 +22,7 @@ from mkosi.qemu import (
     finalize_initrd,
     finalize_kernel_command_line_extra,
     finalize_register,
+    qemu_open_fds,
 )
 from mkosi.run import run
 from mkosi.util import PathString, current_home_dir
@@ -40,6 +41,7 @@ def run_vmspawn(args: Args, config: Config) -> None:
     if config.firmware_variables and config.firmware_variables != Path("microsoft"):
         die("mkosi vmspawn does not support FirmwareVariables=")
 
+    qemu_device_fds = qemu_open_fds(config)
     kernel = config.expand_linux_specifiers() if config.linux else None
     firmware = finalize_firmware(config, kernel)
 
@@ -112,7 +114,7 @@ def run_vmspawn(args: Args, config: Config) -> None:
 
         cmdline += [*args.cmdline, *finalize_kernel_command_line_extra(config)]
 
-        env = os.environ.copy()
+        env = os.environ.copy() | {"LISTEN_FDNAMES": ":".join(k.value for k in qemu_device_fds)}
         if config.qemu_args:
             env["SYSTEMD_VMSPAWN_QEMU_EXTRA"] = " ".join(config.qemu_args)
 
@@ -122,10 +124,11 @@ def run_vmspawn(args: Args, config: Config) -> None:
             stdout=sys.stdout,
             env=env | config.finalize_environment(),
             log=False,
+            pass_fds=qemu_device_fds.values(),
             sandbox=config.sandbox(
                 network=True,
                 devices=True,
                 relaxed=True,
-                options=["--same-dir"],
+                options=["--same-dir", "--pack-fds"],
             ),
         )
