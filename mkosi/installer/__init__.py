@@ -154,6 +154,7 @@ class PackageManager:
         *,
         apivfs: bool,
         options: Sequence[PathString] = (),
+        xattr: bool = False,
     ) -> AbstractContextManager[list[PathString]]:
         return context.sandbox(
             network=True,
@@ -163,6 +164,7 @@ class PackageManager:
                 *cls.options(root=context.root, apivfs=apivfs),
                 *options,
             ],
+            xattr=xattr,
         )  # fmt: skip
 
     @classmethod

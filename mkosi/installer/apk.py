@@ -89,10 +89,11 @@ class Apk(PackageManager):
         *,
         apivfs: bool = False,
         stdout: _FILE = None,
+        xattr: bool = False,
     ) -> CompletedProcess:
         return run(
             cls.cmd(context) + [operation, *arguments],
-            sandbox=cls.sandbox(context, apivfs=apivfs),
+            sandbox=cls.sandbox(context, apivfs=apivfs, xattr=xattr),
             env=cls.finalize_environment(context),
             stdout=stdout,
         )
@@ -117,11 +118,12 @@ class Apk(PackageManager):
                 *packages,
             ],
             apivfs=apivfs,
+            xattr=True,
         )  # fmt: skip
 
     @classmethod
     def remove(cls, context: Context, packages: Sequence[str]) -> None:
-        cls.invoke(context, "del", packages, apivfs=True)
+        cls.invoke(context, "del", packages, apivfs=True, xattr=True)
 
     @classmethod
     def sync(cls, context: Context, force: bool) -> None:

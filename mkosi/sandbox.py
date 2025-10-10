@@ -63,6 +63,7 @@ PR_CAP_AMBIENT_RAISE = 2
 # These definitions are taken from the libseccomp headers
 SCMP_ACT_ALLOW = 0x7FFF0000
 SCMP_ACT_ERRNO = 0x00050000
+SCMP_ACT_NOTIFY = 0x7FC00000
 SD_LISTEN_FDS_START = 3
 SIGSTOP = 19
 
@@ -138,7 +139,7 @@ def oserror(syscall: str, filename: str = "", errno: int = 0) -> None:
     if errno == ENOSYS and is_main():
         print(ENOSYS_MSG.format(syscall=syscall, kver=os.uname().version), file=sys.stderr)
 
-    raise OSError(ctypes.get_errno(), os.strerror(errno), filename or None)
+    raise OSError(errno, os.strerror(errno), filename or None)
 
 
 def unshare(flags: int) -> None:
@@ -216,38 +217,33 @@ def have_effective_cap(capability: int) -> bool:
     return False
 
 
-def seccomp_suppress(*, chown: bool = False, sync: bool = False) -> None:
+def seccomp_setup(
+    *,
+    suppress_chown: bool = False,
+    suppress_sync: bool = False,
+    notify_xattr: bool = False,
+    notify_transport_fd: int | None = None,
+) -> None:
     """
-    There's still a few files and directories left in distributions in /usr and /etc that are
-    not owned by root. This causes package managers to fail to install the corresponding packages
-    when run from a single uid user namespace. Unfortunately, non-root users can only create files
-    owned by their own uid. To still allow non-root users to build images, if requested we install
-    a seccomp filter that makes calls to chown() and friends a noop.
+    Set up a seccomp filter for the sandbox.
+
+    If suppress_chown is True, makes calls to chown() and friends a noop. This is needed because
+    there's still a few files and directories left in distributions in /usr and /etc that are
+    not owned by root, but non-root users can only create files owned by their own uid.
+
+    If suppress_sync is True, makes calls to sync() and friends a noop to speed up builds.
+
+    If notify_xattr is True, makes calls to getxattr() and friends intercepted via seccomp
+    userspace notifications.
+
+    If userspace notification are used, the notify file descriptor is sent over the provided
+    notify transport file descriptor provided using notify_transport_fd.
     """
-    if not chown and not sync:
+    if not suppress_chown and not suppress_sync and not notify_xattr:
         return
 
-    libseccomp = ctypes.CDLL("libseccomp.so.2")
-    if libseccomp is None:
-        raise FileNotFoundError("libseccomp.so.2")
-
-    libseccomp.seccomp_init.argtypes = (ctypes.c_uint32,)
-    libseccomp.seccomp_init.restype = ctypes.c_void_p
-    libseccomp.seccomp_release.argtypes = (ctypes.c_void_p,)
-    libseccomp.seccomp_release.restype = None
-    libseccomp.seccomp_syscall_resolve_name.argtypes = (ctypes.c_char_p,)
-    libseccomp.seccomp_rule_add_exact.argtypes = (
-        ctypes.c_void_p,
-        ctypes.c_uint32,
-        ctypes.c_int,
-        ctypes.c_uint,
-    )
-    libseccomp.seccomp_load.argtypes = (ctypes.c_void_p,)
-
-    seccomp = libseccomp.seccomp_init(SCMP_ACT_ALLOW)
-
     suppress = []
-    if chown:
+    if suppress_chown:
         suppress += [
             b"chown",
             b"chown32",
@@ -257,7 +253,7 @@ def seccomp_suppress(*, chown: bool = False, sync: bool = False) -> None:
             b"lchown",
             b"lchown32",
         ]
-    if sync:
+    if suppress_sync:
         suppress += [
             b"fdatasync",
             b"fsync",
@@ -267,6 +263,43 @@ def seccomp_suppress(*, chown: bool = False, sync: bool = False) -> None:
             b"sync_file_range2",
             b"syncfs",
         ]
+
+    notify = []
+    if notify_xattr:
+        notify += [
+            b"setxattr",
+            b"lsetxattr",
+            b"fsetxattr",
+            b"getxattr",
+            b"lgetxattr",
+            b"fgetxattr",
+            b"listxattr",
+            b"llistxattr",
+            b"flistxattr",
+            b"removexattr",
+            b"lremovexattr",
+            b"fremovexattr",
+        ]
+
+    libseccomp = ctypes.CDLL("libseccomp.so.2")
+    if libseccomp is None:
+        raise FileNotFoundError("libseccomp.so.2")
+
+    libseccomp.seccomp_init.argtypes = (ctypes.c_uint32,)
+    libseccomp.seccomp_init.restype = ctypes.c_void_p
+    libseccomp.seccomp_release.argtypes = (ctypes.c_void_p,)
+    libseccomp.seccomp_reset.argtypes = (ctypes.c_void_p, ctypes.c_uint32)
+    libseccomp.seccomp_syscall_resolve_name.argtypes = (ctypes.c_char_p,)
+    libseccomp.seccomp_rule_add_exact.argtypes = (
+        ctypes.c_void_p,
+        ctypes.c_uint32,
+        ctypes.c_int,
+        ctypes.c_uint,
+    )
+    libseccomp.seccomp_load.argtypes = (ctypes.c_void_p,)
+    libseccomp.seccomp_notify_fd.argtypes = (ctypes.c_void_p,)
+
+    seccomp = libseccomp.seccomp_init(SCMP_ACT_ALLOW)
 
     try:
         for syscall in suppress:
@@ -278,11 +311,28 @@ def seccomp_suppress(*, chown: bool = False, sync: bool = False) -> None:
             if r < 0:
                 oserror("seccomp_rule_add_exact", errno=r)
 
+        for syscall in notify:
+            id = libseccomp.seccomp_syscall_resolve_name(syscall)
+            if id < 0:
+                continue
+
+            r = libseccomp.seccomp_rule_add_exact(seccomp, SCMP_ACT_NOTIFY, id, 0)
+            if r < 0:
+                oserror("seccomp_rule_add_exact", errno=r)
+
         r = libseccomp.seccomp_load(seccomp)
         if r < 0:
             oserror("seccomp_load", errno=r)
+
+        # If xattr notify is requested, send the notify fd over the socket
+        if notify_transport_fd is not None and (notify_fd := libseccomp.seccomp_notify_fd(seccomp)) >= 0:
+            import socket
+
+            with socket.fromfd(notify_transport_fd, family=socket.AF_UNIX, type=socket.SOCK_DGRAM) as sock:
+                socket.send_fds(sock, [], [notify_fd])
     finally:
         libseccomp.seccomp_release(seccomp)
+        libseccomp.seccomp_reset(None, SCMP_ACT_ALLOW)
 
 
 def lsattr(path: str) -> int:
@@ -862,32 +912,34 @@ mkosi-sandbox [OPTIONS...] COMMAND [ARGUMENTS...]
 
 {ANSI_HIGHLIGHT}Run the specified command in a custom sandbox.{ANSI_NORMAL}
 
-  -h --help                       Show this help
-     --version                    Show package version
-     --tmpfs DST                  Mount a new tmpfs on DST
-     --dev DST                    Mount dev on DST
-     --proc DST                   Mount procfs on DST
-     --dir DST                    Create a new directory at DST
-     --bind SRC DST               Bind mount the host path SRC to DST
-     --bind-try SRC DST           Bind mount the host path SRC to DST if it exists
-     --ro-bind SRC DST            Bind mount the host path SRC to DST read-only
-     --ro-bind-try SRC DST        Bind mount the host path SRC to DST read-only if it exists
-     --symlink SRC DST            Create a symlink at DST pointing to SRC
-     --write DATA DST             Write DATA to DST
-     --overlay-lowerdir DIR       Add a lower directory for the next overlayfs mount
-     --overlay-upperdir DIR       Set the upper directory for the next overlayfs mount
-     --overlay-workdir DIR        Set the working directory for the next overlayfs mount
-     --overlay DST                Mount an overlay filesystem at DST
-     --unsetenv NAME              Unset the environment variable with name NAME
-     --setenv NAME VALUE          Set the environment variable with name NAME to VALUE
-     --chdir DIR                  Change the working directory in the sandbox to DIR
-     --same-dir                   Change the working directory in the sandbox to $PWD
-     --become-root                Map the current user/group to root:root in the sandbox
-     --suppress-chown             Make chown() syscalls in the sandbox a noop
-     --suppress-sync              Make sync() syscalls in the sandbox a noop
-     --unshare-net                Unshare the network namespace if possible
-     --unshare-ipc                Unshare the IPC namespace if possible
-     --suspend                    Stop process before execve()
+  -h --help                            Show this help
+     --version                         Show package version
+     --tmpfs DST                       Mount a new tmpfs on DST
+     --dev DST                         Mount dev on DST
+     --proc DST                        Mount procfs on DST
+     --dir DST                         Create a new directory at DST
+     --bind SRC DST                    Bind mount the host path SRC to DST
+     --bind-try SRC DST                Bind mount the host path SRC to DST if it exists
+     --ro-bind SRC DST                 Bind mount the host path SRC to DST read-only
+     --ro-bind-try SRC DST             Bind mount the host path SRC to DST read-only if it exists
+     --symlink SRC DST                 Create a symlink at DST pointing to SRC
+     --write DATA DST                  Write DATA to DST
+     --overlay-lowerdir DIR            Add a lower directory for the next overlayfs mount
+     --overlay-upperdir DIR            Set the upper directory for the next overlayfs mount
+     --overlay-workdir DIR             Set the working directory for the next overlayfs mount
+     --overlay DST                     Mount an overlay filesystem at DST
+     --unsetenv NAME                   Unset the environment variable with name NAME
+     --setenv NAME VALUE               Set the environment variable with name NAME to VALUE
+     --chdir DIR                       Change the working directory in the sandbox to DIR
+     --same-dir                        Change the working directory in the sandbox to $PWD
+     --become-root                     Map the current user/group to root:root in the sandbox
+     --suppress-chown                  Make chown() syscalls in the sandbox a noop
+     --suppress-sync                   Make sync() syscalls in the sandbox a noop
+     --seccomp-notify-transport-fd FD  Unix socket on which to send seccomp inotify file descriptor
+     --seccomp-notify-xattr            Install seccomp notify listener for xattr syscalls
+     --unshare-net                     Unshare the network namespace if possible
+     --unshare-ipc                     Unshare the IPC namespace if possible
+     --suspend                         Stop process before execve()
 
 See the mkosi-sandbox(1) man page for details.\
 """
@@ -914,6 +966,8 @@ def main(argv: list[str] = sys.argv[1:]) -> None:
     workdir = ""
     chdir = None
     become_root = suppress_chown = suppress_sync = unshare_net = unshare_ipc = suspend = pack_fds = False
+    seccomp_notify_transport_fd = None
+    seccomp_notify_xattr = False
 
     try:
         ttyname = os.ttyname(2) if os.isatty(2) else ""
@@ -989,6 +1043,10 @@ def main(argv: list[str] = sys.argv[1:]) -> None:
             suppress_chown = True
         elif arg == "--suppress-sync":
             suppress_sync = True
+        elif arg == "--seccomp-notify-transport-fd":
+            seccomp_notify_transport_fd = int(argv.pop())
+        elif arg == "--seccomp-notify-xattr":
+            seccomp_notify_xattr = True
         elif arg == "--unshare-net":
             unshare_net = True
         elif arg == "--unshare-ipc":
@@ -1002,6 +1060,9 @@ def main(argv: list[str] = sys.argv[1:]) -> None:
         else:
             argv.append(arg)
             break
+
+    if seccomp_notify_xattr and seccomp_notify_transport_fd is None:
+        raise ValueError("--seccomp-notify-xattr cannot be specified without --seccomp-notify-transport-fd")
 
     if argv:
         if not is_main():
@@ -1033,12 +1094,17 @@ def main(argv: list[str] = sys.argv[1:]) -> None:
 
     userns = acquire_privileges(become_root=become_root)
 
-    seccomp_suppress(
+    seccomp_setup(
         # If we're root in a user namespace with a single user, we're still not going to be able to
         # chown() stuff, so check for that and apply the seccomp filter as well in that case.
-        chown=suppress_chown and (userns or userns_has_single_user()),
-        sync=suppress_sync,
+        suppress_chown=suppress_chown and (userns or userns_has_single_user()),
+        suppress_sync=suppress_sync,
+        notify_xattr=seccomp_notify_xattr,
+        notify_transport_fd=seccomp_notify_transport_fd,
     )
+
+    if seccomp_notify_transport_fd is not None:
+        os.close(seccomp_notify_transport_fd)
 
     try:
         unshare(namespaces)

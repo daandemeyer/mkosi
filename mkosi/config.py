@@ -2471,6 +2471,7 @@ class Config:
         overlay: Optional[Path] = None,
         options: Sequence[PathString] = (),
         setup: Sequence[PathString] = (),
+        xattr: bool = False,
     ) -> AbstractContextManager[list[PathString]]:
         opt: list[PathString] = [*options]
 
@@ -2494,6 +2495,7 @@ class Config:
             options=opt,
             setup=setup,
             extra=self.extra_search_paths,
+            xattr=xattr,
         )
 
 

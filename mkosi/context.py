@@ -89,6 +89,7 @@ class Context:
         devices: bool = False,
         scripts: Optional[Path] = None,
         options: Sequence[PathString] = (),
+        xattr: bool = False,
     ) -> AbstractContextManager[list[PathString]]:
         return self.config.sandbox(
             network=network,
@@ -96,4 +97,5 @@ class Context:
             scripts=scripts,
             overlay=self.sandbox_tree,
             options=options,
+            xattr=xattr,
         )

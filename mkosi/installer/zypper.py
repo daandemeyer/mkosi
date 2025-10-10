@@ -126,10 +126,11 @@ class Zypper(PackageManager):
         options: Sequence[str] = (),
         apivfs: bool = False,
         stdout: _FILE = None,
+        xattr: bool = False,
     ) -> CompletedProcess:
         return run(
             cls.cmd(context) + [*options, operation, *arguments],
-            sandbox=cls.sandbox(context, apivfs=apivfs),
+            sandbox=cls.sandbox(context, apivfs=apivfs, xattr=xattr),
             env=cls.finalize_environment(context),
             stdout=stdout,
         )
@@ -153,11 +154,11 @@ class Zypper(PackageManager):
 
         arguments += [*packages]
 
-        cls.invoke(context, "install", arguments, apivfs=apivfs)
+        cls.invoke(context, "install", arguments, apivfs=apivfs, xattr=True)
 
     @classmethod
     def remove(cls, context: Context, packages: Sequence[str]) -> None:
-        cls.invoke(context, "remove", ["--clean-deps", *packages], apivfs=True, options=["--ignore-unknown"])
+        cls.invoke(context, "remove", ["--clean-deps", *packages], apivfs=True, options=["--ignore-unknown"], xattr=True)
 
     @classmethod
     def sync(cls, context: Context, force: bool, arguments: Sequence[str] = ()) -> None:

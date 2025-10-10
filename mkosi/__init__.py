@@ -754,6 +754,7 @@ def script_maybe_chroot_sandbox(
                     *context.config.distribution.installer.package_manager(context.config).mounts(context),
                 ],
                 scripts=hd,
+                xattr=True,
             ) as sandbox:  # fmt: skip
                 yield sandbox
         else:
@@ -3153,7 +3154,7 @@ def run_selinux_relabel(context: Context) -> None:
     with complete_step(f"Relabeling files using {policy} policy"):
         run(
             [setfiles, "-mFr", "/buildroot", "-T0", "-c", binpolicy, fc, "/buildroot"],
-            sandbox=context.sandbox(options=context.rootoptions()),
+            sandbox=context.sandbox(options=context.rootoptions(), xattr=True),
             check=context.config.selinux_relabel == ConfigFeature.enabled,
         )
 
@@ -4082,6 +4083,7 @@ def run_box(args: Args, config: Config) -> None:
             mounts += ["--ro-bind", d, "/mkosi"]
             stack.enter_context(scopedenv({"PATH": f"/mkosi:{os.environ['PATH']}"}))
 
+        acquire_privileges()
         run(
             cmdline,
             stdin=sys.stdin,
@@ -4093,6 +4095,7 @@ def run_box(args: Args, config: Config) -> None:
                 network=True,
                 relaxed=True,
                 options=["--same-dir", *mounts],
+                xattr=True,
             ),
         )
 

@@ -178,13 +178,14 @@ class Pacman(PackageManager):
         *,
         apivfs: bool = False,
         stdout: _FILE = None,
+        xattr: bool = False,
     ) -> CompletedProcess:
         with umask(~0o755):
             (context.root / "var/lib/pacman/local").mkdir(parents=True, exist_ok=True)
 
         return run(
             cls.cmd(context) + [operation, *arguments],
-            sandbox=cls.sandbox(context, apivfs=apivfs),
+            sandbox=cls.sandbox(context, apivfs=apivfs, xattr=xattr),
             env=cls.finalize_environment(context),
             stdout=stdout,
         )
@@ -205,7 +206,7 @@ class Pacman(PackageManager):
 
         arguments += [*packages]
 
-        cls.invoke(context, "--sync", arguments, apivfs=apivfs)
+        cls.invoke(context, "--sync", arguments, apivfs=apivfs, xattr=True)
 
     @classmethod
     def remove(cls, context: Context, packages: Sequence[str]) -> None:
@@ -214,7 +215,7 @@ class Pacman(PackageManager):
         }
         remove = [p for p in packages if p in installed]
         if remove:
-            cls.invoke(context, "--remove", ["--nosave", "--recursive", *remove], apivfs=True)
+            cls.invoke(context, "--remove", ["--nosave", "--recursive", *remove], apivfs=True, xattr=True)
 
     @classmethod
     def keyring(cls, context: Context) -> None:

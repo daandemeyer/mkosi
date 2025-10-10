@@ -227,6 +227,7 @@ class Apt(PackageManager):
         apivfs: bool = False,
         options: Sequence[PathString] = (),
         stdout: _FILE = None,
+        xattr: bool = False,
     ) -> CompletedProcess:
         with umask(~0o755):
             # TODO: Drop once apt 2.5.4 is widely available.
@@ -237,7 +238,7 @@ class Apt(PackageManager):
 
         return run(
             cls.cmd(context) + [operation, *arguments],
-            sandbox=cls.sandbox(context, apivfs=apivfs, options=options),
+            sandbox=cls.sandbox(context, apivfs=apivfs, options=options, xattr=xattr),
             env=cls.finalize_environment(context),
             stdout=stdout,
         )
@@ -269,7 +270,7 @@ class Apt(PackageManager):
 
         arguments += [*packages]
 
-        cls.invoke(context, "install", arguments, apivfs=apivfs)
+        cls.invoke(context, "install", arguments, apivfs=apivfs, xattr=True)
 
         policyrcd.unlink()
 
@@ -280,7 +281,7 @@ class Apt(PackageManager):
 
     @classmethod
     def remove(cls, context: Context, packages: Sequence[str]) -> None:
-        cls.invoke(context, "purge", packages, apivfs=True)
+        cls.invoke(context, "purge", packages, apivfs=True, xattr=True)
 
     @classmethod
     def sync(cls, context: Context, force: bool) -> None:

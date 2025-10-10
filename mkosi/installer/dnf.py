@@ -222,11 +222,12 @@ class Dnf(PackageManager):
         apivfs: bool = False,
         stdout: _FILE = None,
         cached_metadata: bool = True,
+        xattr: bool = False,
     ) -> CompletedProcess:
         try:
             return run(
                 cls.cmd(context, cached_metadata=cached_metadata) + [operation, *arguments],
-                sandbox=cls.sandbox(context, apivfs=apivfs),
+                sandbox=cls.sandbox(context, apivfs=apivfs, xattr=xattr),
                 env=cls.finalize_environment(context),
                 stdout=stdout,
             )
@@ -254,11 +255,11 @@ class Dnf(PackageManager):
 
         arguments += [*packages]
 
-        cls.invoke(context, "install", arguments, apivfs=apivfs)
+        cls.invoke(context, "install", arguments, apivfs=apivfs, xattr=True)
 
     @classmethod
     def remove(cls, context: Context, packages: Sequence[str]) -> None:
-        cls.invoke(context, "remove", packages, apivfs=True)
+        cls.invoke(context, "remove", packages, apivfs=True, xattr=True)
 
     @classmethod
     def sync(cls, context: Context, force: bool, arguments: Sequence[str] = ()) -> None:

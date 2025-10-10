@@ -2,12 +2,14 @@
 
 import contextlib
 import errno
+import functools
 import logging
 import os
 import queue
 import shlex
 import shutil
 import signal
+import socket
 import subprocess
 import sys
 import threading
@@ -21,6 +23,7 @@ from typing import TYPE_CHECKING, Any, Callable, Generic, NoReturn, Optional, Pr
 from mkosi.log import ARG_DEBUG, ARG_DEBUG_SANDBOX, ARG_DEBUG_SHELL, die
 from mkosi.sandbox import acquire_privileges, joinpath, umask
 from mkosi.util import _FILE, PathString, flatten, one_zero, resource_path, unique
+from mkosi.seccomp import xattr_notify_handler
 
 # These types are only generic during type checking and not at runtime, leading
 # to a TypeError during compilation.
@@ -98,6 +101,36 @@ def fork_and_wait(target: Callable[..., None], *args: Any, **kwargs: Any) -> Non
     except BaseException:
         os.kill(pid, signal.SIGTERM)
         _, status = os.waitpid(pid, 0)
+
+    rc = os.waitstatus_to_exitcode(status)
+
+    if rc != 0:
+        raise subprocess.CalledProcessError(rc, ["self"])
+
+
+@contextlib.contextmanager
+def fork_background(target: Callable[..., None], *args: Any, interrupt: bool = False, **kwargs: Any) -> Iterator[None]:
+    pid = os.fork()
+    if pid == 0:
+        with uncaught_exception_handler(exit=os._exit):
+            target(*args, **kwargs)
+
+    # Unlike fork_and_wait(), we want to re-raise exceptions here as they won't be coming from the background
+    # process but from our current process that is unwinding.
+
+    try:
+        yield
+        if interrupt:
+            os.kill(pid, signal.SIGINT)
+        _, status = os.waitpid(pid, 0)
+    except KeyboardInterrupt:
+        os.kill(pid, signal.SIGINT)
+        _, status = os.waitpid(pid, 0)
+        raise
+    except BaseException:
+        os.kill(pid, signal.SIGTERM)
+        _, status = os.waitpid(pid, 0)
+        raise
 
     rc = os.waitstatus_to_exitcode(status)
 
@@ -213,6 +246,11 @@ def spawn(
         prefix = [os.fspath(x) for x in sbx]
 
         try:
+            seccomp_notify_transport_fd = int(prefix[prefix.index("--seccomp-notify-transport-fd") + 1])
+        except ValueError:
+            seccomp_notify_transport_fd = None
+
+        try:
             proc = subprocess.Popen(
                 [*prefix, *cmdline],
                 stdin=stdin,
@@ -221,12 +259,18 @@ def spawn(
                 text=True,
                 user=user,
                 group=group,
-                pass_fds=pass_fds,
+                pass_fds=[
+                    *pass_fds,
+                    *([seccomp_notify_transport_fd] if seccomp_notify_transport_fd is not None else []),
+                ],
                 env=env,
                 preexec_fn=preexec,
             )
         except FileNotFoundError as e:
             die(f"{e.filename} not found.")
+
+        if seccomp_notify_transport_fd is not None:
+            os.close(seccomp_notify_transport_fd)
 
         try:
             yield proc
@@ -380,7 +424,7 @@ class AsyncioThread(threading.Thread, Generic[T]):
         self.join()
         self.process()
 
-        if type is None:
+        if type is None or type is KeyboardInterrupt:
             try:
                 raise self.exc.get_nowait()
             except queue.Empty:
@@ -472,6 +516,7 @@ def sandbox_cmd(
     options: Sequence[PathString] = (),
     setup: Sequence[PathString] = (),
     extra: Sequence[Path] = (),
+    xattr: bool = False,
 ) -> Iterator[list[PathString]]:
     assert not (overlay and relaxed)
 
@@ -488,6 +533,12 @@ def sandbox_cmd(
             "--unsetenv", "TMPDIR",
             *network_options(network=network),
         ]  # fmt: skip
+
+        if xattr:
+            recv, send = socket.socketpair(socket.AF_UNIX, socket.SOCK_DGRAM, 0)
+            cmdline += ["--seccomp-notify-xattr", "--seccomp-notify-transport-fd", str(send.fileno())]
+            with recv:
+                stack.enter_context(fork_background(functools.partial(xattr_notify_handler, transport=recv), interrupt=True))
 
         for d in ("usr", "opt"):
             if not (tools / d).exists():
