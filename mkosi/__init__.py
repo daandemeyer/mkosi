@@ -4224,6 +4224,8 @@ def run_box(args: Args, config: Config) -> None:
         extra = ":".join(os.fspath(p) for p in config.extra_search_paths)
         existing = os.environ.get("PYTHONPATH", "")
         env |= {"PYTHONPATH": f"{extra}:{existing}" if existing else extra}
+    if (shell := os.getenv("SHELL")) and not config.find_binary(shell):
+        env |= {"SHELL": "/bin/bash"}
 
     cmdline = [*args.cmdline]
 
