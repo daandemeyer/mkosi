@@ -1,0 +1,187 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+name: update-snapshot
+
+permissions:
+  actions: write
+  checks: read
+  contents: write
+  pull-requests: write
+
+on:
+  schedule:
+    # Update snapshots every three days at midnight
+    - cron: "0 0 */3 * *"
+  workflow_dispatch:
+
+jobs:
+  update-snapshot:
+    runs-on: ubuntu-24.04
+    if: github.repository == 'daandemeyer/mkosi'
+    strategy:
+      fail-fast: false
+      matrix:
+        distro:
+          - arch
+          - centos
+          - debian
+          - fedora
+          - opensuse
+          - ubuntu
+
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: ./
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Update snapshot
+        id: update
+        run: |
+          branch="update-snapshot/${{ matrix.distro }}"
+          git checkout -B "$branch"
+
+          tools/update-snapshot.py -d ${{ matrix.distro }} -c
+
+          if git diff --quiet HEAD~1 HEAD 2>/dev/null; then
+            echo "updated=false" >>"$GITHUB_OUTPUT"
+          else
+            git push -f origin "$branch"
+            echo "updated=true" >>"$GITHUB_OUTPUT"
+            echo "branch=$branch" >>"$GITHUB_OUTPUT"
+            echo "title=$(git log -1 --format=%s)" >>"$GITHUB_OUTPUT"
+          fi
+
+      - name: Create or update pull request
+        if: steps.update.outputs.updated == 'true'
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea
+        with:
+          script: |
+            const branch = '${{ steps.update.outputs.branch }}';
+            const title = '${{ steps.update.outputs.title }}';
+            const distro = '${{ matrix.distro }}';
+            const body = `Automated snapshot update for ${distro}.`;
+
+            const { data: pulls } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              head: `${context.repo.owner}:${branch}`,
+            });
+
+            let number;
+
+            if (pulls.length > 0) {
+              const pull = pulls[0];
+              await github.rest.pulls.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pull.number,
+                title: title,
+                body: body,
+              });
+              console.log(`Updated existing pull request #${pull.number}`);
+              number = pull.number;
+            } else {
+              const { data: pr } = await github.rest.pulls.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: title,
+                body: body,
+                head: branch,
+                base: 'main',
+              });
+              console.log(`Created pull request #${pr.number}`);
+              number = pr.number;
+            }
+
+            // Trigger all PR workflows on the PR branch via workflow_dispatch since
+            // workflows don't run on PRs created with the default GITHUB_TOKEN.
+            const { data: { workflows } } = await github.rest.actions.listRepoWorkflows({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+
+            for (const workflow of workflows) {
+              if (workflow.state !== 'active')
+                continue;
+
+              if (workflow.name === '${{ github.workflow }}')
+                continue;
+
+              // Fetch the workflow file to check if it has a pull_request trigger.
+              const { data: content } = await github.rest.repos.getContent({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                path: workflow.path,
+                ref: branch,
+              });
+
+              const yaml = Buffer.from(content.content, 'base64').toString();
+              if (!yaml.match(/\bpull_request\b/)) {
+                console.log(`Skipping workflow ${workflow.name}: no pull_request trigger`);
+                continue;
+              }
+
+              try {
+                await github.rest.actions.createWorkflowDispatch({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  workflow_id: workflow.id,
+                  ref: branch,
+                });
+                console.log(`Dispatched workflow ${workflow.name} for branch ${branch}`);
+              } catch (e) {
+                console.log(`Skipping workflow ${workflow.name}: ${e.message}`);
+              }
+            }
+
+            // Wait for check runs to appear on the PR head commit before enabling
+            // auto-merge, since auto-merge can only be enabled once some checks are
+            // running.
+            const { data: head } = await github.rest.repos.getCommit({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: branch,
+            });
+
+            const sha = head.sha;
+            console.log(`Waiting for check runs to appear on ${sha}...`);
+
+            for (let i = 0; i < 30; i++) {
+              const { data: checks } = await github.rest.checks.listForRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: sha,
+              });
+
+              if (checks.total_count > 0) {
+                console.log(`Found ${checks.total_count} check run(s), proceeding.`);
+                break;
+              }
+
+              if (i === 29) {
+                throw new Error('Timed out waiting for check runs to appear');
+              }
+
+              await new Promise(r => setTimeout(r, 10000));
+            }
+
+            // Enable auto-merge so the PR merges automatically once CI is green.
+            const { data: pullData } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: number,
+            });
+
+            await github.graphql(`
+              mutation($pullRequestId: ID!) {
+                enablePullRequestAutoMerge(input: { pullRequestId: $pullRequestId, mergeMethod: MERGE }) {
+                  clientMutationId
+                }
+              }
+            `, { pullRequestId: pullData.node_id });
+
+            console.log(`Enabled auto-merge for pull request #${number}`);
