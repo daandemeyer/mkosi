@@ -1,0 +1,1213 @@
+{
+  "manifest_version": 1,
+  "config": {
+    "name": "image",
+    "distribution": "centos",
+    "architecture": "x86-64",
+    "output_format": "directory",
+    "release": "10"
+  },
+  "packages": [
+    {
+      "type": "rpm",
+      "name": "alternatives",
+      "version": "1.30-2.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "audit-libs",
+      "version": "4.0.3-5.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "authselect",
+      "version": "1.5.2-1.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "authselect-libs",
+      "version": "1.5.2-1.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "basesystem",
+      "version": "11-22.el10",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "bash",
+      "version": "5.2.26-6.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "binutils",
+      "version": "2.41-64.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "binutils-gold",
+      "version": "2.41-64.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "boost-regex",
+      "version": "1.83.0-7.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "bzip2-libs",
+      "version": "1.0.8-25.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "ca-certificates",
+      "version": "2025.2.80_v9.0.305-102.el10",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "centos-gpg-keys",
+      "version": "10.0-20.el10",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "centos-stream-release",
+      "version": "10.0-20.el10",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "centos-stream-repos",
+      "version": "10.0-20.el10",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "coreutils",
+      "version": "9.5-7.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "coreutils-common",
+      "version": "9.5-7.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "cpio",
+      "version": "2.15-3.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "cracklib",
+      "version": "2.9.11-8.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "cracklib-dicts",
+      "version": "2.9.11-8.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "crypto-policies",
+      "version": "20260216-1.git0e54016.el10",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "cryptsetup-libs",
+      "version": "2.8.1-2.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "cyrus-sasl-lib",
+      "version": "2.1.28-27.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "dbus",
+      "version": "1:1.14.10-5.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "dbus-broker",
+      "version": "36-4.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "dbus-common",
+      "version": "1:1.14.10-5.el10",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "device-mapper",
+      "version": "10:1.02.210-2.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "device-mapper-libs",
+      "version": "10:1.02.210-2.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "diffutils",
+      "version": "3.10-8.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "dracut",
+      "version": "107-4.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "duktape",
+      "version": "2.7.0-10.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "efi-filesystem",
+      "version": "6-8.el10",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "efivar-libs",
+      "version": "39-3.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "elfutils-debuginfod-client",
+      "version": "0.194-2.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "elfutils-default-yama-scope",
+      "version": "0.194-2.el10",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "elfutils-libelf",
+      "version": "0.194-2.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "elfutils-libs",
+      "version": "0.194-2.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "expat",
+      "version": "2.7.3-1.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "file",
+      "version": "5.45-9.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "file-libs",
+      "version": "5.45-9.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "filesystem",
+      "version": "3.18-17.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "findutils",
+      "version": "1:4.10.0-5.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "fuse-libs",
+      "version": "2.9.9-25.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "fwupd",
+      "version": "2.0.19-2.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gawk",
+      "version": "5.3.0-6.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gdb",
+      "version": "16.3-3.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gdb-headless",
+      "version": "16.3-3.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gdbm",
+      "version": "1:1.23-14.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gdbm-libs",
+      "version": "1:1.23-14.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gettext-envsubst",
+      "version": "0.22.5-6.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gettext-libs",
+      "version": "0.22.5-6.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gettext-runtime",
+      "version": "0.22.5-6.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "glib2",
+      "version": "2.80.4-12.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "glibc",
+      "version": "2.39-114.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "glibc-common",
+      "version": "2.39-114.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "glibc-minimal-langpack",
+      "version": "2.39-114.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gmp",
+      "version": "1:6.2.1-12.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gnupg2",
+      "version": "2.4.5-4.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gnutls",
+      "version": "3.8.10-3.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gpg-pubkey",
+      "version": "363fc0972f64b699aed3968e1ff6a2171d997668-61bae63b",
+      "architecture": ""
+    },
+    {
+      "type": "rpm",
+      "name": "gpg-pubkey",
+      "version": "99db70fae1d7ce227fb6488205b555b38483c65d-5ccc5b19",
+      "architecture": ""
+    },
+    {
+      "type": "rpm",
+      "name": "gpgme",
+      "version": "1.23.2-6.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "grep",
+      "version": "3.11-10.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "grub2-common",
+      "version": "1:2.12-45.el10",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "grub2-efi-x64",
+      "version": "1:2.12-45.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "grub2-efi-x64-modules",
+      "version": "1:2.12-45.el10",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "grub2-pc",
+      "version": "1:2.12-45.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "grub2-pc-modules",
+      "version": "1:2.12-45.el10",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "grub2-tools",
+      "version": "1:2.12-45.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "grub2-tools-minimal",
+      "version": "1:2.12-45.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gzip",
+      "version": "1.13-3.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "hwdata",
+      "version": "0.379-10.8.el10",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "iproute",
+      "version": "6.17.0-2.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "iputils",
+      "version": "20240905-5.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "iw",
+      "version": "6.17-1.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "jansson",
+      "version": "2.14-3.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "json-c",
+      "version": "0.18-3.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "json-glib",
+      "version": "1.8.0-5.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "kbd",
+      "version": "2.6.4-7.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "kbd-legacy",
+      "version": "2.6.4-7.el10",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "kbd-misc",
+      "version": "2.6.4-7.el10",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "kernel",
+      "version": "6.12.0-213.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "kernel-core",
+      "version": "6.12.0-213.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "kernel-modules",
+      "version": "6.12.0-213.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "kernel-modules-core",
+      "version": "6.12.0-213.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "keyutils-libs",
+      "version": "1.6.3-5.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "kmod",
+      "version": "31-13.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "kmod-libs",
+      "version": "31-13.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "krb5-libs",
+      "version": "1.21.3-9.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "less",
+      "version": "661-3.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libacl",
+      "version": "2.3.2-4.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libarchive",
+      "version": "3.7.7-4.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libassuan",
+      "version": "2.5.6-6.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libattr",
+      "version": "2.5.2-5.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libbabeltrace",
+      "version": "1.5.11-9.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libblkid",
+      "version": "2.40.2-19.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libbpf",
+      "version": "2:1.7.0-1.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libbrotli",
+      "version": "1.1.0-7.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libcap",
+      "version": "2.69-7.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libcap-ng",
+      "version": "0.8.4-6.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libcbor",
+      "version": "0.11.0-3.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libcom_err",
+      "version": "1.47.1-5.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libcurl",
+      "version": "8.12.1-4.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libdrm",
+      "version": "2.4.128-1.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libeconf",
+      "version": "0.6.2-4.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libedit",
+      "version": "3.1-52.20230828cvs.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libevent",
+      "version": "2.1.12-16.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libfdisk",
+      "version": "2.40.2-19.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libffi",
+      "version": "3.4.4-10.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libfido2",
+      "version": "1.14.0-7.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libgcc",
+      "version": "14.3.1-4.4.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libgcrypt",
+      "version": "1.11.0-6.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libgpg-error",
+      "version": "1.50-2.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libicu",
+      "version": "74.2-5.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libidn2",
+      "version": "2.3.7-3.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libipt",
+      "version": "2.1-5.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libjcat",
+      "version": "0.2.2-2.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libkcapi",
+      "version": "1.5.0-3.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libkcapi-hasher",
+      "version": "1.5.0-3.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libkcapi-hmaccalc",
+      "version": "1.5.0-3.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libksba",
+      "version": "1.6.7-2.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libmnl",
+      "version": "1.0.5-7.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libmount",
+      "version": "2.40.2-19.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libnghttp2",
+      "version": "1.68.0-3.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libnl3",
+      "version": "3.11.0-1.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libpciaccess",
+      "version": "0.16-16.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libpsl",
+      "version": "0.21.5-6.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libpwquality",
+      "version": "1.4.5-12.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libseccomp",
+      "version": "2.5.6-1.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libselinux",
+      "version": "3.10-1.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libsemanage",
+      "version": "3.10-1.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libsepol",
+      "version": "3.10-1.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libsmartcols",
+      "version": "2.40.2-19.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libssh",
+      "version": "0.12.0-2.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libssh-config",
+      "version": "0.12.0-2.el10",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "libstdc++",
+      "version": "14.3.1-4.4.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libtasn1",
+      "version": "4.20.0-1.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libunistring",
+      "version": "1.1-10.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libusb1",
+      "version": "1.0.29-3.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libutempter",
+      "version": "1.2.1-15.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libuuid",
+      "version": "2.40.2-19.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libverto",
+      "version": "0.3.2-10.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libxcrypt",
+      "version": "4.4.36-10.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libxml2",
+      "version": "2.12.5-10.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libxmlb",
+      "version": "0.3.24-1.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libzstd",
+      "version": "1.5.5-9.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "lz4-libs",
+      "version": "1.9.4-8.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "microcode_ctl",
+      "version": "4:20260210-1.el10",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "mokutil",
+      "version": "2:0.7.2-4.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "mpdecimal",
+      "version": "2.5.1-12.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "mpfr",
+      "version": "4.2.1-8.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "nano",
+      "version": "8.1-3.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "ncurses-base",
+      "version": "6.4-14.20240127.el10",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "ncurses-libs",
+      "version": "6.4-14.20240127.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "npth",
+      "version": "1.6-21.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "openldap",
+      "version": "2.6.10-1.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "openssh",
+      "version": "9.9p1-21.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "openssh-clients",
+      "version": "9.9p1-21.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "openssh-server",
+      "version": "9.9p1-21.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "openssl-fips-provider",
+      "version": "1:3.5.5-1.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "openssl-libs",
+      "version": "1:3.5.5-1.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "os-prober",
+      "version": "1.81-9.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "p11-kit",
+      "version": "0.26.2-1.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "p11-kit-trust",
+      "version": "0.26.2-1.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "pam",
+      "version": "1.6.1-9.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "pam-libs",
+      "version": "1.6.1-9.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "pcre2",
+      "version": "10.44-1.el10.3",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "pcre2-syntax",
+      "version": "10.44-1.el10.3",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "polkit",
+      "version": "125-4.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "polkit-libs",
+      "version": "125-4.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "popt",
+      "version": "1.19-8.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "procps-ng",
+      "version": "4.0.4-11.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "protobuf-c",
+      "version": "1.5.0-6.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "psmisc",
+      "version": "23.6-8.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "publicsuffix-list-dafsa",
+      "version": "20240107-5.el10",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "python3-libs",
+      "version": "3.12.12-5.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "python3-pip-wheel",
+      "version": "23.3.2-7.el10",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "readline",
+      "version": "8.2-11.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "sed",
+      "version": "4.9-5.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "setup",
+      "version": "2.14.5-7.el10",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "shadow-utils",
+      "version": "2:4.15.0-11.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "shared-mime-info",
+      "version": "2.3-8.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "shim-x64",
+      "version": "15.8-5.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "source-highlight",
+      "version": "3.1.9-25.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "sqlite-libs",
+      "version": "3.46.1-5.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "strace",
+      "version": "6.12-3.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "systemd",
+      "version": "257-23.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "systemd-boot-unsigned",
+      "version": "257-23.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "systemd-libs",
+      "version": "257-23.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "systemd-pam",
+      "version": "257-23.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "systemd-resolved",
+      "version": "257-23.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "systemd-udev",
+      "version": "257-23.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "tpm2-tss",
+      "version": "4.1.3-6.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "tzdata",
+      "version": "2025c-1.el10",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "util-linux",
+      "version": "2.40.2-19.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "util-linux-core",
+      "version": "2.40.2-19.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "which",
+      "version": "2.21-44.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "wireless-regdb",
+      "version": "2025.10.07-1.el10",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "xz",
+      "version": "1:5.6.2-4.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "xz-libs",
+      "version": "1:5.6.2-4.el10",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "zlib-ng-compat",
+      "version": "2.2.3-3.el10",
+      "architecture": "x86_64"
+    }
+  ],
+  "extension": {}
+}
