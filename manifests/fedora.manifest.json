@@ -1,0 +1,1237 @@
+{
+  "manifest_version": 1,
+  "config": {
+    "name": "image",
+    "distribution": "fedora",
+    "architecture": "x86-64",
+    "output_format": "directory",
+    "release": "rawhide"
+  },
+  "packages": [
+    {
+      "type": "rpm",
+      "name": "alternatives",
+      "version": "1.33-5.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "amd-ucode-firmware",
+      "version": "20260309-1.fc45",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "audit-libs",
+      "version": "4.1.3-1.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "authselect",
+      "version": "1.7.1-1.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "authselect-libs",
+      "version": "1.7.1-1.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "bash",
+      "version": "5.3.9-3.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "binutils",
+      "version": "2.46.50-2.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "boost-regex",
+      "version": "1.90.0-6.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "bzip2-libs",
+      "version": "1.0.8-23.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "ca-certificates",
+      "version": "2025.2.80_v9.0.304-6.fc45",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "coreutils",
+      "version": "9.10-3.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "coreutils-common",
+      "version": "9.10-3.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "cpio",
+      "version": "2.15-9.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "cracklib",
+      "version": "2.9.11-10.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "crypto-policies",
+      "version": "20251128-3.git19878fe.fc44",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "cryptsetup-libs",
+      "version": "2.8.4-1.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "ctags",
+      "version": "6.2.1-3.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "cyrus-sasl-lib",
+      "version": "2.1.28-35.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "dbus",
+      "version": "1:1.16.2-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "dbus-broker",
+      "version": "37-8.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "dbus-common",
+      "version": "1:1.16.2-1.fc45",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "device-mapper",
+      "version": "1.02.212-2.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "device-mapper-libs",
+      "version": "1.02.212-2.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "diffutils",
+      "version": "3.12-5.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "dracut",
+      "version": "109-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "duktape",
+      "version": "2.7.0-11.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "efi-filesystem",
+      "version": "6-6.fc44",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "efivar-libs",
+      "version": "39-12.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "elfutils-debuginfod-client",
+      "version": "0.194-5.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "elfutils-default-yama-scope",
+      "version": "0.194-5.fc45",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "elfutils-libelf",
+      "version": "0.194-5.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "elfutils-libs",
+      "version": "0.194-5.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "expat",
+      "version": "2.7.4-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "fedora-gpg-keys",
+      "version": "45-0.1",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "fedora-release",
+      "version": "45-0.2",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "fedora-release-common",
+      "version": "45-0.2",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "fedora-release-identity-basic",
+      "version": "45-0.2",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "fedora-repos",
+      "version": "45-0.1",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "fedora-repos-rawhide",
+      "version": "45-0.1",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "file",
+      "version": "5.47-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "file-libs",
+      "version": "5.47-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "filesystem",
+      "version": "3.18-56.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "findutils",
+      "version": "1:4.10.0-7.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "fuse3-libs",
+      "version": "3.18.1-2.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gawk",
+      "version": "5.4.0-2.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gdb",
+      "version": "17.1-5.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gdb-headless",
+      "version": "17.1-5.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gdbm",
+      "version": "1:1.23-11.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gdbm-libs",
+      "version": "1:1.23-11.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gettext-envsubst",
+      "version": "1.0-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gettext-libs",
+      "version": "1.0-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gettext-runtime",
+      "version": "1.0-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "glib2",
+      "version": "2.87.3-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "glibc",
+      "version": "2.43.9000-4.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "glibc-common",
+      "version": "2.43.9000-4.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "glibc-minimal-langpack",
+      "version": "2.43.9000-4.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gmp",
+      "version": "1:6.3.0-5.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gnulib-l10n",
+      "version": "20241231-2.fc44",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "gnutls",
+      "version": "3.8.12-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gpg-pubkey",
+      "version": "36f612dcf27f7d1a48a835e4dbfcf71c6d9f90a6-6786af3b",
+      "architecture": ""
+    },
+    {
+      "type": "rpm",
+      "name": "gpg-pubkey",
+      "version": "4f50a6114cd5c6976a7f1179655a4b02f577861e-6888bc98",
+      "architecture": ""
+    },
+    {
+      "type": "rpm",
+      "name": "gpg-pubkey",
+      "version": "d924b10d3e810dabdd8b56b596e7e91491211fce-697c9899",
+      "architecture": ""
+    },
+    {
+      "type": "rpm",
+      "name": "grep",
+      "version": "3.12-3.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "grub2-common",
+      "version": "1:2.12-55.fc45",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "grub2-efi-x64",
+      "version": "1:2.12-55.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "grub2-efi-x64-modules",
+      "version": "1:2.12-55.fc45",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "grub2-pc",
+      "version": "1:2.12-55.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "grub2-pc-modules",
+      "version": "1:2.12-55.fc45",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "grub2-tools",
+      "version": "1:2.12-55.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "grub2-tools-minimal",
+      "version": "1:2.12-55.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gzip",
+      "version": "1.14-2.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "iproute",
+      "version": "6.17.0-2.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "iputils",
+      "version": "20250605-2.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "iw",
+      "version": "6.17-2.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "jansson",
+      "version": "2.14-4.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "json-c",
+      "version": "0.18-8.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "kbd",
+      "version": "2.9.0-2.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "kbd-legacy",
+      "version": "2.9.0-2.fc44",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "kbd-misc",
+      "version": "2.9.0-2.fc44",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "kernel",
+      "version": "7.0.0-0.rc3.260313g0257f64bdac7.33.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "kernel-core",
+      "version": "7.0.0-0.rc3.260313g0257f64bdac7.33.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "kernel-modules",
+      "version": "7.0.0-0.rc3.260313g0257f64bdac7.33.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "kernel-modules-core",
+      "version": "7.0.0-0.rc3.260313g0257f64bdac7.33.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "keyutils-libs",
+      "version": "1.6.3-7.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "kmod",
+      "version": "34.2-4.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "kmod-libs",
+      "version": "34.2-4.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "krb5-libs",
+      "version": "1.22.2-2.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "less",
+      "version": "692-3.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libacl",
+      "version": "2.3.2-6.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libattr",
+      "version": "2.5.2-8.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libbabeltrace",
+      "version": "1.5.11-17.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libblkid",
+      "version": "2.41.3-12.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libbpf",
+      "version": "2:1.6.3-2.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libbrotli",
+      "version": "1.2.0-3.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libcap",
+      "version": "2.77-2.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libcap-ng",
+      "version": "0.9.1-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libcbor",
+      "version": "0.13.0-2.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libcom_err",
+      "version": "1.47.3-4.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libcurl",
+      "version": "8.19.0~rc3-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libeconf",
+      "version": "0.7.9-3.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libedit",
+      "version": "3.1-58.20251016cvs.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libevent",
+      "version": "2.1.12-17.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libfdisk",
+      "version": "2.41.3-12.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libffi",
+      "version": "3.5.2-2.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libfido2",
+      "version": "1.16.0-5.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libgcc",
+      "version": "16.0.1-0.9.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libicu",
+      "version": "77.1-2.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libidn2",
+      "version": "2.3.8-3.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libipt",
+      "version": "2.1.2-4.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libkcapi",
+      "version": "1.5.0-7.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libkcapi-hasher",
+      "version": "1.5.0-7.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libkcapi-hmaccalc",
+      "version": "1.5.0-7.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "liblastlog2",
+      "version": "2.41.3-12.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libmnl",
+      "version": "1.0.5-9.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libmount",
+      "version": "2.41.3-12.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libnghttp2",
+      "version": "1.68.0-3.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libnghttp3",
+      "version": "1.15.0-1.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libnl3",
+      "version": "3.12.0-3.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libnsl2",
+      "version": "2.0.1-5.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libpkgconf",
+      "version": "2.5.1-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libpsl",
+      "version": "0.21.5-7.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libpwquality",
+      "version": "1.4.5-15.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libseccomp",
+      "version": "2.6.0-3.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libselinux",
+      "version": "3.10-1.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libsemanage",
+      "version": "3.10-1.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libsepol",
+      "version": "3.10-1.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libsmartcols",
+      "version": "2.41.3-12.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libssh",
+      "version": "0.12.0-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libssh-config",
+      "version": "0.12.0-1.fc45",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "libstdc++",
+      "version": "16.0.1-0.9.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libtasn1",
+      "version": "4.21.0-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libtextstyle",
+      "version": "1.0-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libtirpc",
+      "version": "1.3.7-2.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libtool-ltdl",
+      "version": "2.5.4-10.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libunistring",
+      "version": "1.1-11.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libusb1",
+      "version": "1.0.29-5.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libuuid",
+      "version": "2.41.3-12.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libverto",
+      "version": "0.3.2-12.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libxcrypt",
+      "version": "4.5.2-3.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libxml2",
+      "version": "2.12.10-6.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libyaml",
+      "version": "0.2.5-18.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libzstd",
+      "version": "1.5.7-5.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "linux-firmware-whence",
+      "version": "20260309-1.fc45",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "microcode_ctl",
+      "version": "2:2.1-74.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "mokutil",
+      "version": "2:0.7.2-4.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "mpdecimal",
+      "version": "4.0.1-3.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "mpfr",
+      "version": "4.2.2-3.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "nano",
+      "version": "8.7.1-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "ncurses-base",
+      "version": "6.6-1.fc44",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "ncurses-libs",
+      "version": "6.6-1.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "nettle",
+      "version": "3.10.1-3.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "ngtcp2",
+      "version": "1.19.0-2.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "ngtcp2-crypto-ossl",
+      "version": "1.19.0-2.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "openldap",
+      "version": "2.6.13-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "openssh",
+      "version": "10.2p1-5.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "openssh-clients",
+      "version": "10.2p1-5.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "openssh-server",
+      "version": "10.2p1-5.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "openssl-libs",
+      "version": "1:3.5.5-1.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "os-prober",
+      "version": "1.81-11.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "p11-kit",
+      "version": "0.26.2-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "p11-kit-trust",
+      "version": "0.26.2-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "pam",
+      "version": "1.7.2-1.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "pam-libs",
+      "version": "1.7.2-1.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "pcre2",
+      "version": "10.47-1.fc44.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "pcre2-syntax",
+      "version": "10.47-1.fc44.1",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "pkgconf",
+      "version": "2.5.1-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "pkgconf-m4",
+      "version": "2.5.1-1.fc45",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "pkgconf-pkg-config",
+      "version": "2.5.1-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "polkit",
+      "version": "127-3.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "polkit-libs",
+      "version": "127-3.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "popt",
+      "version": "1.19-10.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "procps-ng",
+      "version": "4.0.6-1.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "psmisc",
+      "version": "23.7-7.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "publicsuffix-list-dafsa",
+      "version": "20260116-1.fc44",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "python-pip-wheel",
+      "version": "26.0.1-2.fc45",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "python3-libs",
+      "version": "3.14.3-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "readline",
+      "version": "8.3-4.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "sed",
+      "version": "4.9-8.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "setup",
+      "version": "2.15.0-29.fc45",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "shadow-utils",
+      "version": "2:4.19.3-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "shim-unsigned-x64",
+      "version": "16.1-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "shim-x64",
+      "version": "16.1-6",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "source-highlight",
+      "version": "3.1.9-27.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "sqlite-libs",
+      "version": "3.51.2-1.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "strace",
+      "version": "6.19-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "systemd",
+      "version": "260~rc4-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "systemd-boot-unsigned",
+      "version": "260~rc4-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "systemd-libs",
+      "version": "260~rc4-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "systemd-networkd",
+      "version": "260~rc4-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "systemd-resolved",
+      "version": "260~rc4-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "systemd-shared",
+      "version": "260~rc4-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "systemd-sysusers",
+      "version": "260~rc4-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "systemd-udev",
+      "version": "260~rc4-1.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "tpm2-tss",
+      "version": "4.1.3-9.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "tzdata",
+      "version": "2025c-2.fc44",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "util-linux",
+      "version": "2.41.3-12.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "util-linux-core",
+      "version": "2.41.3-12.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "which",
+      "version": "2.23-4.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "wireless-regdb",
+      "version": "2026.02.04-1.fc45",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "xxhash-libs",
+      "version": "0.8.3-4.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "xz",
+      "version": "1:5.8.2-2.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "xz-libs",
+      "version": "1:5.8.2-2.fc44",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "zlib-ng-compat",
+      "version": "2.3.3-5.fc45",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "zstd",
+      "version": "1.5.7-5.fc44",
+      "architecture": "x86_64"
+    }
+  ],
+  "extension": {}
+}
