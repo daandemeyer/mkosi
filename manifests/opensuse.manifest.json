@@ -1,0 +1,1363 @@
+{
+  "manifest_version": 1,
+  "config": {
+    "name": "image",
+    "distribution": "opensuse",
+    "architecture": "x86-64",
+    "output_format": "directory",
+    "release": "tumbleweed"
+  },
+  "packages": [
+    {
+      "type": "rpm",
+      "name": "aaa_base",
+      "version": "84.87+git20260210.ecce285-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "babeltrace",
+      "version": "1.5.8-4.3",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "bash",
+      "version": "5.3.9-6.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "bash-sh",
+      "version": "5.3.9-6.2",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "binutils",
+      "version": "2.45-2.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "branding-openSUSE",
+      "version": "84.87.20240405-5.3",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "compat-usrmerge-tools",
+      "version": "84.87-5.23",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "coreutils",
+      "version": "9.10-3.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "cpio",
+      "version": "2.15-7.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "crypto-policies",
+      "version": "20250714.cd6043a-1.2",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "dbus-1-common",
+      "version": "1.14.10-5.2",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "dbus-broker",
+      "version": "37-2.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "dbus-broker-block-restart",
+      "version": "37-2.2",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "device-mapper",
+      "version": "2.03.38_1.02.212-2.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "diffutils",
+      "version": "3.12-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "dracut",
+      "version": "109+suse.39.g53459763-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "efibootmgr",
+      "version": "18-1.9",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "elfutils",
+      "version": "0.192-3.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "envsubst",
+      "version": "0.26-3.3",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "file",
+      "version": "5.46-5.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "file-magic",
+      "version": "5.46-5.2",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "filesystem",
+      "version": "84.87-21.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "fillup",
+      "version": "1.42-281.4",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "findutils",
+      "version": "4.10.0-2.3",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "fuse3",
+      "version": "3.18.1-2.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gawk",
+      "version": "5.3.2-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gdb",
+      "version": "16.3-5.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gettext-runtime",
+      "version": "0.26-3.3",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gio-branding-openSUSE",
+      "version": "42.1-5.1",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "glib2-tools",
+      "version": "2.86.4-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "glibc",
+      "version": "2.42-3.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "gpg-pubkey",
+      "version": "1c59d66fcd52563a16933dbcfec28eaf09d9ea69-645b99ce",
+      "architecture": ""
+    },
+    {
+      "type": "rpm",
+      "name": "gpg-pubkey",
+      "version": "22c07ba534178cd02efe22aab88b2fd43dbdc284-49144c3f",
+      "architecture": ""
+    },
+    {
+      "type": "rpm",
+      "name": "gpg-pubkey",
+      "version": "7f009157b127b994d5cfbe76f74f09bc3fa1d6ce-63c9481c",
+      "architecture": ""
+    },
+    {
+      "type": "rpm",
+      "name": "gpg-pubkey",
+      "version": "ad485664e901b867051ab15f35a2f86e29b700a4-62b07e22",
+      "architecture": ""
+    },
+    {
+      "type": "rpm",
+      "name": "gpg-pubkey",
+      "version": "bf3f9a67d3a2ff98a73f5e07488c583d287a0027-682477e3",
+      "architecture": ""
+    },
+    {
+      "type": "rpm",
+      "name": "gpg-pubkey",
+      "version": "feab502539d846db2c0961ca70af9e8139db7c82-510a966b",
+      "architecture": ""
+    },
+    {
+      "type": "rpm",
+      "name": "grep",
+      "version": "3.12-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "grub2-common",
+      "version": "2.14-6.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "grub2-i386-pc",
+      "version": "2.14-6.1",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "grub2-x86_64-efi",
+      "version": "2.14-6.1",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "gzip",
+      "version": "1.14-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "iproute2",
+      "version": "6.19-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "iputils",
+      "version": "20250605-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "jq",
+      "version": "1.8.1-2.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "kbd",
+      "version": "2.7.1-3.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "kernel-default",
+      "version": "6.19.7-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "kmod",
+      "version": "34.2-4.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "krb5",
+      "version": "1.22.2-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "less",
+      "version": "692-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libacl1",
+      "version": "2.3.2-2.4",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libasm1",
+      "version": "0.192-3.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libattr1",
+      "version": "2.5.2-1.5",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libaudit1",
+      "version": "4.0.2-3.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libblkid1",
+      "version": "2.41.3-5.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libbpf1",
+      "version": "1.6.3-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libbrotlicommon1",
+      "version": "1.2.0-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libbrotlidec1",
+      "version": "1.2.0-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libbz2-1",
+      "version": "1.0.8-5.13",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libcap-ng0",
+      "version": "0.8.5-1.4",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libcap2",
+      "version": "2.75-2.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libcbor0_13",
+      "version": "0.13.0-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libcom_err2",
+      "version": "1.47.3-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libcrypt1",
+      "version": "4.5.2-2.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libcryptsetup12",
+      "version": "2.8.4-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libctf-nobfd0",
+      "version": "2.45-2.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libctf0",
+      "version": "2.45-2.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libcurl4",
+      "version": "8.19.0-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libdebuginfod1",
+      "version": "0.192-3.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libdevmapper-event1_03",
+      "version": "2.03.38_1.02.212-2.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libdevmapper1_03",
+      "version": "2.03.38_1.02.212-2.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libduktape207",
+      "version": "2.7.0-3.6",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libdw1",
+      "version": "0.192-3.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libeconf0",
+      "version": "0.8.3-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libedit0",
+      "version": "20250104.3.1-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libefivar1",
+      "version": "38-3.4",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libelf1",
+      "version": "0.192-3.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libexpat1",
+      "version": "2.7.4-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libfdisk1",
+      "version": "2.41.3-5.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libffi8",
+      "version": "3.5.2-2.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libfido2-1",
+      "version": "1.16.0-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libfreetype6",
+      "version": "2.14.2-2.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libfuse3-4",
+      "version": "3.18.1-2.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libgcc_s1",
+      "version": "16.0.1+git7922-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libgcrypt20",
+      "version": "1.12.1-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libgio-2_0-0",
+      "version": "2.86.4-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libglib-2_0-0",
+      "version": "2.86.4-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libgmodule-2_0-0",
+      "version": "2.86.4-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libgmp10",
+      "version": "6.3.0-5.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libgobject-2_0-0",
+      "version": "2.86.4-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libgomp1",
+      "version": "16.0.1+git7922-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libgpg-error0",
+      "version": "1.59-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libhidapi-hidraw0",
+      "version": "0.14.0-1.6",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libidn2-0",
+      "version": "2.3.8-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libjitterentropy3",
+      "version": "3.6.3-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libjq1",
+      "version": "1.8.1-2.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libjson-c5",
+      "version": "0.18-1.4",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libkbdfile1",
+      "version": "2.7.1-3.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libkeymap1",
+      "version": "2.7.1-3.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libkeyutils1",
+      "version": "1.6.3-7.5",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libkfont0",
+      "version": "2.7.1-3.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libkmod2",
+      "version": "34.2-4.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "liblastlog2-2",
+      "version": "2.41.3-5.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libldap2",
+      "version": "2.6.10-1.3",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "liblua5_4-5",
+      "version": "5.4.8-4.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "liblz1",
+      "version": "1.15-1.3",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "liblzma5",
+      "version": "5.8.2-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libmagic1",
+      "version": "5.46-5.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libmnl0",
+      "version": "1.0.5-2.4",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libmount1",
+      "version": "2.41.3-5.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libmpdec4",
+      "version": "4.0.1-2.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libmpfr6",
+      "version": "4.2.2-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libncurses6",
+      "version": "6.6.20260307-98.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libnghttp2-14",
+      "version": "1.68.0-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libnghttp3-9",
+      "version": "1.15.0-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libngtcp2-16",
+      "version": "1.21.0-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libngtcp2_crypto_ossl0",
+      "version": "1.21.0-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libnss_usrfiles2",
+      "version": "2.27.1-1.5",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libonig5",
+      "version": "6.9.10-2.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libopenssl3",
+      "version": "3.5.3-3.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libpcre2-8-0",
+      "version": "10.47-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libpkgconf7",
+      "version": "2.5.1-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libpng16-16",
+      "version": "1.6.55-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libpolkit-agent-1-0",
+      "version": "127-2.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libpolkit-gobject-1-0",
+      "version": "127-2.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libpopt0",
+      "version": "1.19-1.11",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libpsl5",
+      "version": "0.21.5-1.6",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libpython3_13-1_0",
+      "version": "3.13.12-1.3",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libreadline8",
+      "version": "8.3.3-2.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "librpmbuild10",
+      "version": "4.20.1-6.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libsasl2-3",
+      "version": "2.1.28-12.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libseccomp2",
+      "version": "2.6.0-2.3",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libselinux1",
+      "version": "3.10-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libsemanage-conf",
+      "version": "3.10-2.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libsemanage2",
+      "version": "3.10-2.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libsepol2",
+      "version": "3.10-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libsmartcols1",
+      "version": "2.41.3-5.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libsource-highlight4",
+      "version": "3.1.9-5.15",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libsqlite3-0",
+      "version": "3.51.2-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libssh-config",
+      "version": "0.11.4-1.1",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "libssh4",
+      "version": "0.11.4-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libstdc++6",
+      "version": "16.0.1+git7922-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libsubid5",
+      "version": "4.19.4-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libsystemd0",
+      "version": "259.5-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libtasn1-6",
+      "version": "4.21.0-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libtextstyle0",
+      "version": "0.26-3.3",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libtss2-esys0",
+      "version": "4.1.3-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libtss2-fapi-common",
+      "version": "4.1.3-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libtss2-fapi1",
+      "version": "4.1.3-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libtss2-mu0",
+      "version": "4.1.3-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libtss2-rc0",
+      "version": "4.1.3-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libtss2-sys1",
+      "version": "4.1.3-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libtss2-tcti-device0",
+      "version": "4.1.3-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libtss2-tctildr0",
+      "version": "4.1.3-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libudev1",
+      "version": "259.5-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libunistring5",
+      "version": "1.4.2-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libuuid1",
+      "version": "2.41.3-5.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libverto1",
+      "version": "0.3.2-3.6",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libwtmpdb0",
+      "version": "0.75.0+git20251130.0d8fe7a-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libxml2-16",
+      "version": "2.14.5-4.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libxtables12",
+      "version": "1.8.13-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libz1",
+      "version": "1.3.1-1.4",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "libzstd1",
+      "version": "1.5.7-3.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "login_defs",
+      "version": "4.19.4-1.1",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "nano",
+      "version": "8.7.1-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "ncurses-utils",
+      "version": "6.6.20260307-98.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "netcfg",
+      "version": "11.6-13.6",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "openSUSE-build-key",
+      "version": "1.0-63.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "openSUSE-release",
+      "version": "20260314-4005.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "openSUSE-release-ftp",
+      "version": "20260314-4005.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "openssh-clients",
+      "version": "10.2p1-2.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "openssh-common",
+      "version": "10.2p1-2.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "openssh-server",
+      "version": "10.2p1-2.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "pam",
+      "version": "1.7.2-2.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "pam-config",
+      "version": "2.14+git.20260216-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "pam-extra",
+      "version": "1.7.2-2.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "patterns-base-minimal_base",
+      "version": "20241218-26.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "perl-base",
+      "version": "5.42.0-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "permctl",
+      "version": "1699_20260217-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "permissions",
+      "version": "1699_20260217-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "permissions-config",
+      "version": "1699_20260217-1.1",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "pigz",
+      "version": "2.8-2.6",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "pkgconf",
+      "version": "2.5.1-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "pkgconf-m4",
+      "version": "2.5.1-1.2",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "pkgconf-pkg-config",
+      "version": "2.5.1-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "polkit",
+      "version": "127-2.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "python313-base",
+      "version": "3.13.12-1.3",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "python313-rpm",
+      "version": "4.20.1-6.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "rpm",
+      "version": "4.20.1-6.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "rpm-config-SUSE",
+      "version": "20250904-1.2",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "sed",
+      "version": "4.9-2.9",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "shadow",
+      "version": "4.19.4-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "shadow-pw-mgmt",
+      "version": "4.19.4-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "shared-mime-info",
+      "version": "2.4-3.6",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "shim",
+      "version": "16.1-2.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "strace",
+      "version": "6.19-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "suse-module-tools",
+      "version": "16.1.4-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "suse-module-tools-scriptlets",
+      "version": "16.1.4-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "system-group-hardware",
+      "version": "20250822-2.2",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "system-group-kvm",
+      "version": "20250822-2.2",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "system-user-lp",
+      "version": "20250822-2.2",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "system-user-root",
+      "version": "20190513-2.19",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "system-user-tss",
+      "version": "20250822-2.2",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "systemd",
+      "version": "259.5-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "systemd-boot",
+      "version": "259.5-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "systemd-default-settings",
+      "version": "0.10-1.4",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "systemd-default-settings-branding-openSUSE",
+      "version": "0.10-1.4",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "systemd-networkd",
+      "version": "259.5-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "systemd-presets-branding-openSUSE",
+      "version": "12.2-29.2",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "systemd-presets-common-SUSE",
+      "version": "15-47.2",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "systemd-rpm-macros",
+      "version": "26-1.2",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "sysuser-shadow",
+      "version": "3.3-12.2",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "terminfo-base",
+      "version": "6.6.20260307-98.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "thin-provisioning-tools",
+      "version": "1.2.1-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "tpm2.0-tools",
+      "version": "5.7-2.4",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "ucode-amd",
+      "version": "20251203-1.2",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "ucode-intel",
+      "version": "20260210-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "udev",
+      "version": "259.5-1.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "update-alternatives",
+      "version": "1.22.21-2.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "update-bootloader",
+      "version": "1.27-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "util-linux",
+      "version": "2.41.3-5.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "util-linux-systemd",
+      "version": "2.41.3-5.1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "wireless-regdb",
+      "version": "20251007-1.2",
+      "architecture": "noarch"
+    },
+    {
+      "type": "rpm",
+      "name": "xz",
+      "version": "5.8.2-1.2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "rpm",
+      "name": "zstd",
+      "version": "1.5.7-3.2",
+      "architecture": "x86_64"
+    }
+  ],
+  "extension": {}
+}
