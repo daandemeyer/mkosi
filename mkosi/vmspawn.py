@@ -9,7 +9,6 @@ from pathlib import Path
 from mkosi.config import (
     Args,
     Config,
-    ConsoleMode,
     Firmware,
     Network,
     OutputFormat,
@@ -34,9 +33,6 @@ def run_vmspawn(args: Args, config: Config) -> None:
 
     if config.firmware_variables and config.firmware_variables != Path("microsoft"):
         die("mkosi vmspawn does not support FirmwareVariables=")
-
-    if config.console == ConsoleMode.headless:
-        die("Console=headless is not supported by vmspawn")
 
     kernel = config.expand_linux_specifiers() if config.linux else None
     firmware = finalize_firmware(config, kernel)
