@@ -15,12 +15,12 @@ from typing import Optional, cast
 
 import mkosi.resources
 from mkosi.config import DocFormat, InitrdProfile, OutputFormat
-from mkosi.documentation import show_docs
 from mkosi.log import ARG_DEBUG, ARG_DEBUG_SHELL, die, log_notice, log_setup
 from mkosi.run import find_binary, run, uncaught_exception_handler
 from mkosi.sandbox import __version__, umask
 from mkosi.tree import move_tree, rmtree
 from mkosi.util import PathString, copyfile2, mandatory_variable, resource_path
+from mkosi.verb.documentation import show_docs
 
 
 @dataclasses.dataclass(frozen=True)

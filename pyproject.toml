@@ -30,6 +30,7 @@ packages = [
     "mkosi.distribution",
     "mkosi.installer",
     "mkosi.resources",
+    "mkosi.verb",
 ]
 
 [tool.setuptools.package-data]

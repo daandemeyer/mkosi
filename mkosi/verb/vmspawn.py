@@ -18,7 +18,9 @@ from mkosi.config import (
     yes_no,
 )
 from mkosi.log import die
-from mkosi.qemu import (
+from mkosi.run import run
+from mkosi.util import PathString, groupby
+from mkosi.verb.qemu import (
     copy_ephemeral,
     finalize_credentials,
     finalize_drive,
@@ -26,8 +28,6 @@ from mkosi.qemu import (
     finalize_initrd,
     finalize_kernel_command_line_extra,
 )
-from mkosi.run import run
-from mkosi.util import PathString, groupby
 
 
 def run_vmspawn(args: Args, config: Config) -> None:

@@ -8,11 +8,11 @@ from pathlib import Path
 
 import mkosi.resources
 from mkosi.config import DocFormat
-from mkosi.documentation import show_docs
 from mkosi.initrd import include_system_config, initrd_common_args, initrd_finalize, process_crypttab
 from mkosi.log import ARG_DEBUG, ARG_DEBUG_SHELL, log_setup
 from mkosi.run import run, uncaught_exception_handler
 from mkosi.util import PathString, resource_path
+from mkosi.verb.documentation import show_docs
 
 
 @uncaught_exception_handler()

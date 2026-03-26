@@ -2,26 +2,20 @@
 
 import contextlib
 import datetime
-import functools
-import getpass
 import hashlib
 import itertools
 import json
 import logging
 import os
 import re
-import resource
 import shlex
 import shutil
-import signal
-import socket
 import stat
 import subprocess
 import sys
 import tempfile
 import textwrap
 import uuid
-import zipapp
 from collections.abc import Iterator, Mapping, Sequence
 from contextlib import AbstractContextManager
 from pathlib import Path
@@ -46,8 +40,6 @@ from mkosi.bootloader import (
     want_grub_bios,
     want_grub_efi,
 )
-from mkosi.burn import run_burn
-from mkosi.completion import print_completion
 from mkosi.config import (
     Args,
     ArtifactOutput,
@@ -61,7 +53,6 @@ from mkosi.config import (
     JsonEncoder,
     KeySourceType,
     ManifestFormat,
-    Network,
     OutputFormat,
     SecureBootSignTool,
     ShimBootloader,
@@ -73,15 +64,12 @@ from mkosi.config import (
     cat_config,
     dump_json,
     expand_delayed_specifiers,
-    finalize_configdir,
     finalize_historydir,
     format_bytes,
-    in_box,
     parse_boolean,
     parse_config,
     resolve_deps,
     summary,
-    systemd_pty_forward,
     systemd_tool_version,
     want_kernel,
     want_selinux_relabel,
@@ -89,7 +77,6 @@ from mkosi.config import (
 )
 from mkosi.context import Context
 from mkosi.distribution import Distribution, detect_distribution
-from mkosi.documentation import show_docs
 from mkosi.installer import clean_package_manager_metadata
 from mkosi.kmod import (
     filter_devicetrees,
@@ -108,17 +95,7 @@ from mkosi.mounts import (
 )
 from mkosi.pager import page
 from mkosi.partition import Partition, finalize_root, finalize_roothash
-from mkosi.qemu import (
-    copy_ephemeral,
-    finalize_credentials,
-    finalize_kernel_command_line_extra,
-    join_initrds,
-    run_qemu,
-    run_ssh,
-    start_journal_remote,
-)
 from mkosi.run import (
-    Popen,
     apivfs_options,
     chroot_cmd,
     chroot_options,
@@ -126,7 +103,6 @@ from mkosi.run import (
     finalize_passwd_symlinks,
     find_binary,
     run,
-    spawn,
     workdir,
 )
 from mkosi.sandbox import (
@@ -139,26 +115,36 @@ from mkosi.sandbox import (
     unshare,
     userns_has_single_user,
 )
-from mkosi.sysupdate import run_sysupdate
 from mkosi.tree import copy_tree, is_foreign_uid_tree, make_tree, move_tree, rmtree
-from mkosi.user import INVOKING_USER, become_root_cmd
+from mkosi.user import INVOKING_USER
 from mkosi.util import (
     PathString,
     chdir,
     copyfile,
     copyfile2,
     flatten,
-    flock_or_die,
-    format_rlimit,
     hash_file,
     make_executable,
     one_zero,
     read_env_file,
-    resource_path,
     scopedenv,
 )
+from mkosi.verb.box import run_box
+from mkosi.verb.bump import finalize_image_version
+from mkosi.verb.burn import run_burn
+from mkosi.verb.clean import run_clean
+from mkosi.verb.completion import print_completion
+from mkosi.verb.documentation import show_docs
+from mkosi.verb.genkey import generate_key_cert_pair
+from mkosi.verb.journalctl import run_coredumpctl, run_journalctl
+from mkosi.verb.latest_snapshot import run_latest_snapshot
+from mkosi.verb.qemu import join_initrds, run_qemu
+from mkosi.verb.serve import run_serve
+from mkosi.verb.shell import run_shell
+from mkosi.verb.ssh import run_ssh
+from mkosi.verb.sysupdate import run_sysupdate
+from mkosi.verb.vmspawn import run_vmspawn
 from mkosi.versioncomp import GenericVersion
-from mkosi.vmspawn import run_vmspawn
 
 # Allowed characters from https://uapi-group.org/specifications/specs/version_format_specification
 KERNEL_VERSION_PATTERN = re.compile(r"\d+\.\d+[\w\-.~^+]*", re.ASCII)
@@ -4185,392 +4171,6 @@ def build_image(context: Context) -> None:
     print_output_size(context.config.output_dir_or_cwd() / context.config.output_with_compression)
 
 
-def run_box(args: Args, config: Config) -> None:
-    if not args.cmdline:
-        die("Please specify a command to execute in the sandbox")
-
-    mounts = finalize_certificate_mounts(config, relaxed=True)
-
-    # Since we reuse almost every top level directory from the host except /usr and /etc, the crypto
-    # mountpoints have to exist already in these directories or we'll fail with a permission error. Let's
-    # check this early and show a better error and a suggestion on how users can fix this issue. We use
-    # slice notation to get every 3rd item from the mounts list which is the destination path.
-    for dst in mounts[2::3]:
-        if not Path(dst).exists():
-            die(
-                f"Missing mountpoint {dst}",
-                hint=f"Create an empty directory at {dst} using 'mkdir -p {dst}' as root and try again",
-            )
-
-    hd, hr = detect_distribution()
-
-    env = {"MKOSI_IN_BOX": "1"}
-
-    prefix = os.getenv("SHELL_PROMPT_PREFIX", "")
-    m = re.search(r"\(box(?::(?P<level>[1-9][0-9]*))?\)", prefix)
-    if in_box() and m:
-        level = int(m.group("level") or 1) + 1
-        prefix = prefix[: m.start()] + f"(box:{level})" + prefix[m.end() :]
-    else:
-        prefix = f"(box){prefix}"
-    env |= {"SHELL_PROMPT_PREFIX": prefix}
-
-    if hd:
-        env |= {"MKOSI_HOST_DISTRIBUTION": str(hd)}
-    if hr:
-        env |= {"MKOSI_HOST_RELEASE": hr}
-    if config.tools() != Path("/"):
-        env |= {"MKOSI_DEFAULT_TOOLS_TREE_PATH": os.fspath(config.tools())}
-    if config.extra_search_paths:
-        extra = ":".join(os.fspath(p) for p in config.extra_search_paths)
-        existing = os.environ.get("PYTHONPATH", "")
-        env |= {"PYTHONPATH": f"{extra}:{existing}" if existing else extra}
-
-    cmdline = [*args.cmdline]
-
-    if sys.stdin.isatty() and sys.stdout.isatty():
-        cmdline = systemd_pty_forward(config, background="48;2;12;51;51", title="mkosi-sandbox") + cmdline
-
-    with contextlib.ExitStack() as stack:
-        if config.tools() != Path("/"):
-            d = stack.enter_context(tempfile.TemporaryDirectory(prefix="mkosi-path-"))
-
-            # We have to point zipapp to a directory containing the mkosi module and set the entrypoint
-            # manually instead of directly at the mkosi package, otherwise we get ModuleNotFoundError when
-            # trying to run a zipapp created from a packaged version of mkosi. While zipapp.create_archive()
-            # supports a filter= argument, trying to use this within a site-packages directory is rather slow
-            # so we copy the mkosi package to a temporary directory instead which is much faster.
-            with (
-                tempfile.TemporaryDirectory(prefix="mkosi-zipapp-") as tmp,
-                resource_path(sys.modules[__package__ or __name__]) as module,
-            ):
-                copy_tree(module, Path(tmp) / module.name, sandbox=config.sandbox)
-                zipapp.create_archive(
-                    source=tmp,
-                    target=Path(d) / "mkosi",
-                    main="mkosi.__main__:main",
-                    interpreter="/usr/bin/env python3",
-                )
-
-            make_executable(Path(d) / "mkosi")
-            mounts += ["--ro-bind", d, "/mkosi"]
-            stack.enter_context(scopedenv({"PATH": f"/mkosi:{os.environ['PATH']}"}))
-
-        run(
-            cmdline,
-            stdin=sys.stdin,
-            stdout=sys.stdout,
-            env=os.environ | env,
-            log=False,
-            sandbox=config.sandbox(
-                devices=True,
-                network=True,
-                relaxed=True,
-                options=["--same-dir", *mounts],
-            ),
-        )
-
-
-def run_latest_snapshot(args: Args, config: Config) -> None:
-    print(config.distribution.installer.latest_snapshot(config))
-
-
-def run_shell(args: Args, config: Config) -> None:
-    opname = "acquire shell in" if args.verb == Verb.shell else "boot"
-    if config.output_format not in (OutputFormat.directory, OutputFormat.disk):
-        die(f"Cannot {opname} {config.output_format} images with systemd-nspawn")
-    if config.output_format.use_outer_compression() and config.compress_output:
-        die(f"Cannot {opname} compressed {config.output_format} images with systemd-nspawn")
-
-    cmdline: list[PathString] = ["systemd-nspawn", "--quiet", "--link-journal=no", "--suppress-sync=yes"]
-
-    if config.runtime_network == Network.user:
-        cmdline += ["--resolv-conf=auto"]
-    elif config.runtime_network == Network.interface:
-        cmdline += ["--private-network", "--network-veth"]
-    elif config.runtime_network == Network.none:
-        cmdline += ["--private-network"]
-
-    # If we copied in a .nspawn file, make sure it's actually honoured
-    if config.nspawn_settings:
-        cmdline += ["--settings=trusted"]
-
-    if args.verb == Verb.boot:
-        cmdline += ["--boot"]
-    else:
-        cmdline += [
-            f"--rlimit=RLIMIT_CORE={format_rlimit(resource.RLIMIT_CORE)}",
-            "--console=autopipe",
-        ]
-
-    # Underscores are not allowed in machine names so replace them with hyphens.
-    name = config.machine_or_name().replace("_", "-")
-    cmdline += ["--machine", name, "--register", yes_no(config.register != ConfigFeature.disabled)]
-
-    with contextlib.ExitStack() as stack:
-        for f in finalize_credentials(config, stack).iterdir():
-            cmdline += [f"--load-credential={f.name}:{f}"]
-
-        # Make sure the latest nspawn settings are always used.
-        if config.nspawn_settings:
-            if not (config.output_dir_or_cwd() / f"{name}.nspawn").exists():
-                stack.callback((config.output_dir_or_cwd() / f"{name}.nspawn").unlink, missing_ok=True)
-            copyfile2(config.nspawn_settings, config.output_dir_or_cwd() / f"{name}.nspawn")
-
-        fname = stack.enter_context(copy_ephemeral(config, config.output_dir_or_cwd() / config.output))
-
-        if config.output_format == OutputFormat.disk and args.verb == Verb.boot:
-            run(
-                [
-                    "systemd-repart",
-                    "--image", workdir(fname),
-                    *([f"--size={config.runtime_size}"] if config.runtime_size else []),
-                    "--no-pager",
-                    "--dry-run=no",
-                    "--offline=no",
-                    "--pretty=no",
-                    workdir(fname),
-                ],
-                stdin=sys.stdin,
-                env=config.finalize_environment(),
-                sandbox=config.sandbox(
-                    network=True,
-                    devices=True,
-                    options=["--bind", fname, workdir(fname)],
-                ),
-                setup=become_root_cmd(),
-            )  # fmt: skip
-
-        cmdline += ["--directory" if fname.is_dir() else "--image", fname]
-
-        if config.runtime_build_sources:
-            for t in config.build_sources:
-                src, dst = t.with_prefix("/work/src")
-                uidmap = "rootidmap" if src.stat().st_uid != 0 else "noidmap"
-                cmdline += ["--bind", f"{src}:{dst}:norbind,{uidmap}"]
-
-            if config.build_dir:
-                uidmap = "rootidmap" if config.build_subdir.stat().st_uid != 0 else "noidmap"
-                cmdline += ["--bind", f"{config.build_subdir}:/work/build:norbind,{uidmap}"]
-
-        for tree in config.runtime_trees:
-            target = Path("/root/src") / (tree.target or "")
-            # We add norbind because very often RuntimeTrees= will be used to mount the source
-            # directory into the container and the output directory from which we're running will
-            # very likely be a subdirectory of the source directory which would mean we'd be
-            # mounting the container root directory as a subdirectory in itself which tends to lead
-            # to all kinds of weird issues, which we avoid by not doing a recursive mount which
-            # means the container root directory mounts will be skipped.
-            uidmap = "rootidmap" if tree.source.stat().st_uid != 0 else "noidmap"
-            cmdline += ["--bind", f"{tree.source}:{target}:norbind,{uidmap}"]
-
-        if config.bind_user:
-            cmdline += ["--bind-user", getpass.getuser(), "--bind-user-group=wheel"]
-
-        if args.verb == Verb.boot and config.forward_journal:
-            with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as sock:
-                addr = (
-                    Path(os.getenv("TMPDIR", "/tmp")) / f"mkosi-journal-remote-unix-{uuid.uuid4().hex[:16]}"
-                )
-                sock.bind(os.fspath(addr))
-                sock.listen()
-                if config.output_format == OutputFormat.directory and (stat := os.stat(fname)).st_uid != 0:
-                    os.chown(addr, stat.st_uid, stat.st_gid)
-                stack.enter_context(start_journal_remote(config, sock.fileno()))
-                uidmap = "rootidmap" if addr.stat().st_uid != 0 else "noidmap"
-                cmdline += [
-                    f"--bind={addr}:/run/host/journal/socket:{uidmap}",
-                    "--set-credential=journal.forward_to_socket:/run/host/journal/socket",
-                ]
-
-        if args.verb == Verb.boot:
-            # Add nspawn options first since systemd-nspawn ignores all options after the first argument.
-            argv = args.cmdline
-
-            # When invoked by the kernel, all unknown arguments are passed as environment variables
-            # to pid1. Let's mimic the same behavior when we invoke nspawn as a container.
-            for arg in itertools.chain(
-                config.kernel_command_line,
-                finalize_kernel_command_line_extra(args, config),
-            ):
-                name, sep, value = arg.partition("=")
-
-                # If there's a '.' in the argument name, it's not considered an environment
-                # variable by the kernel.
-                if sep and "." not in name:
-                    cmdline += ["--setenv", f"{name.replace('-', '_')}={value}"]
-                else:
-                    # kernel cmdline config of the form systemd.xxx= get interpreted by systemd
-                    # when running in nspawn as well.
-                    argv += [arg]
-
-            cmdline += argv
-        elif args.cmdline:
-            cmdline += ["--"]
-            cmdline += args.cmdline
-
-        run(
-            cmdline,
-            stdin=sys.stdin,
-            stdout=sys.stdout,
-            env=os.environ | config.finalize_environment(),
-            log=False,
-            sandbox=config.sandbox(
-                devices=True,
-                network=True,
-                relaxed=True,
-                options=["--same-dir"],
-            ),
-        )
-
-
-def run_systemd_tool(tool: str, args: Args, config: Config) -> None:
-    if config.output_format not in (OutputFormat.disk, OutputFormat.directory):
-        die(f"{config.output_format} images cannot be inspected with {tool}")
-
-    if (tool_path := config.find_binary(tool)) is None:
-        die(f"Failed to find {tool}")
-
-    if config.ephemeral:
-        die(f"Images booted in ephemeral mode cannot be inspected with {tool}")
-
-    if not (output := config.output_dir_or_cwd() / config.output).exists():
-        die(
-            f"Output {output} does not exist, cannot inspect with {tool}",
-            hint=f"Build and boot the image first before inspecting it with {tool}",
-        )
-
-    run(
-        [tool_path, "--root" if output.is_dir() else "--image", output, *args.cmdline],
-        stdin=sys.stdin,
-        stdout=sys.stdout,
-        env=os.environ | config.finalize_environment(),
-        log=False,
-        sandbox=config.sandbox(network=True, relaxed=True),
-    )
-
-
-def run_journalctl(args: Args, config: Config) -> None:
-    run_systemd_tool("journalctl", args, config)
-
-
-def run_coredumpctl(args: Args, config: Config) -> None:
-    run_systemd_tool("coredumpctl", args, config)
-
-
-def start_storage_target_mode(config: Config) -> AbstractContextManager[Optional[Popen]]:
-    if config.storage_target_mode == ConfigFeature.disabled:
-        return contextlib.nullcontext()
-
-    if config.storage_target_mode == ConfigFeature.auto and os.getuid() != 0:
-        return contextlib.nullcontext()
-
-    if config.output_format != OutputFormat.disk:
-        if config.storage_target_mode == ConfigFeature.enabled:
-            die("Storage target mode is only supported for the 'disk' output format")
-
-        return contextlib.nullcontext()
-
-    if not config.find_binary("/usr/lib/systemd/systemd-storagetm"):
-        if config.storage_target_mode == ConfigFeature.enabled:
-            die("Storage target mode enabled but systemd-storagetm is not installed")
-
-        return contextlib.nullcontext()
-
-    return spawn(
-        ["/usr/lib/systemd/systemd-storagetm", config.output_with_format],
-        stdin=sys.stdin,
-        stdout=sys.stdout,
-        sandbox=config.sandbox(
-            network=True,
-            relaxed=True,
-            options=["--chdir", config.output_dir_or_cwd()],
-        ),
-        setup=become_root_cmd(),
-    )
-
-
-def run_serve(args: Args, config: Config) -> None:
-    """Serve the output directory via a tiny HTTP server"""
-
-    with contextlib.ExitStack() as stack:
-        http = stack.enter_context(
-            spawn(
-                [python_binary(config), "-m", "http.server", "8081"],
-                stdin=sys.stdin,
-                stdout=sys.stdout,
-                sandbox=config.sandbox(
-                    network=True,
-                    relaxed=True,
-                    options=["--chdir", config.output_dir_or_cwd()],
-                ),
-            )
-        )
-
-        storagetm = stack.enter_context(start_storage_target_mode(config))
-
-        # If we run systemd-storagetm with run0, it replaces the foreground process group with its own which
-        # means the http process doesn't get SIGINT from the terminal, so let's send it ourselves in that
-        # case.
-        if storagetm and os.getuid() != 0:
-            storagetm.wait()
-            http.send_signal(signal.SIGINT)
-
-
-def generate_key_cert_pair(args: Args) -> None:
-    """Generate a private key and accompanying X509 certificate using openssl"""
-
-    keylength = 2048
-    expiration_date = datetime.date.today() + datetime.timedelta(int(args.genkey_valid_days))
-
-    configdir = finalize_configdir(args.directory)
-    if not configdir:
-        die("genkey cannot be used with empty --directory")
-
-    for f in (configdir / "mkosi.key", configdir / "mkosi.crt"):
-        if f.exists() and not args.force:
-            die(
-                f"{f} already exists",
-                hint="To generate new keys, first remove mkosi.key and mkosi.crt",
-            )
-
-    log_step(f"Generating keys rsa:{keylength} for CN {args.genkey_common_name!r}.")
-    logging.info(
-        textwrap.dedent(
-            f"""
-            The keys will expire in {args.genkey_valid_days} days ({expiration_date:%A %d. %B %Y}).
-            Remember to roll them over to new ones before then.
-            """
-        )
-    )
-
-    run(
-        [
-            "openssl",
-            "req",
-            "-new",
-            "-x509",
-            "-newkey", f"rsa:{keylength}",
-            "-keyout", configdir / "mkosi.key",
-            "-out", configdir / "mkosi.crt",
-            "-days", str(args.genkey_valid_days),
-            "-subj", f"/CN={args.genkey_common_name}/",
-            "-nodes"
-        ],
-        env=dict(OPENSSL_CONF="/dev/null"),
-    )  # fmt: skip
-
-
-def finalize_image_version(args: Args, config: Config) -> None:
-    configdir = finalize_configdir(args.directory)
-    if not configdir:
-        die("Image version cannot be finalized with empty --directory")
-    p = configdir / "mkosi.version"
-    assert config.image_version
-    p.write_text(config.image_version)
-    logging.info(f"Wrote new version {config.image_version} to {p}")
-
-
 def check_workspace_directory(config: Config) -> None:
     wd = config.workspace_dir_or_default()
 
@@ -4582,57 +4182,6 @@ def check_workspace_directory(config: Config) -> None:
                 hint="Set BuildSources= to the empty string or use WorkspaceDirectory= to configure "
                 "a different workspace directory",
             )
-
-
-def run_clean_scripts(config: Config) -> None:
-    if not config.clean_scripts:
-        return
-
-    for script in config.clean_scripts:
-        check_script(config, script)
-
-    env = dict(
-        DISTRIBUTION=str(config.distribution),
-        RELEASE=config.release,
-        ARCHITECTURE=str(config.architecture),
-        DISTRIBUTION_ARCHITECTURE=config.distribution.installer.architecture(config.architecture),
-        SRCDIR="/work/src",
-        OUTPUTDIR="/work/out",
-        MKOSI_UID=str(os.getuid()),
-        MKOSI_GID=str(os.getgid()),
-        MKOSI_CONFIG="/work/config.json",
-        MKOSI_DEBUG=one_zero(ARG_DEBUG.get()),
-    )
-
-    if config.architecture.to_efi() is not None:
-        env["EFI_ARCHITECTURE"] = str(config.architecture.to_efi())
-
-    if config.profiles:
-        env["PROFILES"] = " ".join(config.profiles)
-
-    with (
-        finalize_source_mounts(config, ephemeral=False) as sources,
-        finalize_config_json(config) as json,
-    ):
-        for script in config.clean_scripts:
-            with complete_step(f"Running clean script {script}…"):
-                run(
-                    ["/work/clean"],
-                    env=env | config.finalize_environment(),
-                    sandbox=config.sandbox(
-                        tools=False,
-                        options=[
-                            "--dir", "/work/src",
-                            "--chdir", "/work/src",
-                            "--dir", "/work/out",
-                            "--ro-bind", script, "/work/clean",
-                            "--ro-bind", json, "/work/config.json",
-                            *(["--bind", os.fspath(o), "/work/out"] if (o := config.output_dir_or_cwd()).exists() else []),  # noqa: E501
-                            *sources,
-                        ],
-                    ),
-                    stdin=sys.stdin,
-                )  # fmt: skip
 
 
 def validate_certificates_and_keys(config: Config) -> None:
@@ -4699,78 +4248,6 @@ def needs_build(args: Args, config: Config, force: int = 1) -> bool:
         # that it's not a symlink as well.
         or (config.output_dir_or_cwd() / config.output_with_compression).is_symlink()
     )
-
-
-def run_clean(args: Args, config: Config, repository_metadata_needs_sync: bool = False) -> None:
-    # We remove any cached images if either the user used --force twice, or he/she called "clean"
-    # with it passed once. Let's also remove the downloaded package cache if the user specified one
-    # additional "--force".
-
-    # We don't want to require a tools tree to run mkosi clean so we pass in a sandbox that
-    # disables use of the tools tree. We still need a sandbox as we need to acquire privileges to
-    # be able to remove various files from the rootfs.
-    sandbox = functools.partial(config.sandbox, tools=False)
-
-    if args.verb == Verb.clean:
-        remove_outputs = True
-        remove_build_cache = args.force > 0 or args.wipe_build_dir
-        remove_image_cache = args.force > 0
-        remove_package_cache = args.force > 1
-    else:
-        # Rely on the fact that True is 1 and False is 0 in numeric contexts.
-        remove_outputs = args.force > (config.incremental == Incremental.relaxed) or (
-            config.is_incremental() and not have_cache(config)
-        )
-        remove_build_cache = args.force > 1 or args.wipe_build_dir
-        remove_image_cache = args.force > 1 or not have_cache(config) or repository_metadata_needs_sync
-        remove_package_cache = args.force > 2
-
-    if remove_outputs:
-        outputs = {
-            config.output_dir_or_cwd() / output
-            for output in config.outputs
-            if (
-                (config.output_dir_or_cwd() / output).exists()
-                or (config.output_dir_or_cwd() / output).is_symlink()
-            )
-        }
-
-        # Make sure we resolve the symlink we create in the output directory and remove its target
-        # as well as it might not be in the list of outputs anymore if the compression or output
-        # format was changed.
-        outputs |= {o.resolve() for o in outputs}
-
-        if outputs:
-            with (
-                complete_step(f"Removing output files of {config.image} image…"),
-                flock_or_die(config.output_dir_or_cwd() / config.output)
-                if (config.output_dir_or_cwd() / config.output).exists()
-                else contextlib.nullcontext(),
-            ):
-                rmtree(*outputs, sandbox=sandbox)
-
-        run_clean_scripts(config)
-
-    if (
-        remove_build_cache
-        and config.build_dir
-        and config.build_subdir.exists()
-        and any(config.build_subdir.iterdir())
-    ):
-        with complete_step(f"Clearing out build directory of {config.image} image…"):
-            rmtree(*config.build_subdir.iterdir(), sandbox=sandbox)
-
-    if remove_image_cache and config.cache_dir and any(p.exists() for p in cache_tree_paths(config)):
-        with complete_step(f"Removing cache entries of {config.image} image…"):
-            rmtree(*(p for p in cache_tree_paths(config) if p.exists()), sandbox=sandbox)
-
-    if remove_package_cache and config.cache_dir and config.image in ("main", "tools"):
-        with complete_step(f"Clearing out metadata and keyring cache of {config.image} image…"):
-            rmtree(
-                metadata_cache(config),
-                keyring_cache(config),
-                sandbox=sandbox,
-            )
 
 
 def ensure_directories_exist(config: Config) -> None:
