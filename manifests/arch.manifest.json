@@ -1,0 +1,847 @@
+{
+  "manifest_version": 1,
+  "config": {
+    "name": "image",
+    "distribution": "arch",
+    "architecture": "x86-64",
+    "output_format": "directory",
+    "release": "rolling"
+  },
+  "packages": [
+    {
+      "type": "pkg",
+      "name": "acl",
+      "version": "2.4.0-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "attr",
+      "version": "2.6.0-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "audit",
+      "version": "4.2.1-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "bash",
+      "version": "5.3.15-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "binutils",
+      "version": "2.47-4",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "boost-libs",
+      "version": "1.91.0-2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "brotli",
+      "version": "1.2.0-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "bzip2",
+      "version": "1.0.8-6",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "ca-certificates",
+      "version": "20240618-1",
+      "architecture": "any"
+    },
+    {
+      "type": "pkg",
+      "name": "ca-certificates-mozilla",
+      "version": "3.126-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "ca-certificates-utils",
+      "version": "20240618-1",
+      "architecture": "any"
+    },
+    {
+      "type": "pkg",
+      "name": "coreutils",
+      "version": "9.11-2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "cryptsetup",
+      "version": "2.8.7-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "curl",
+      "version": "8.21.0-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "dbus",
+      "version": "1.16.2-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "dbus-broker",
+      "version": "37-3",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "dbus-broker-units",
+      "version": "37-3",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "device-mapper",
+      "version": "2.03.42-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "diffutils",
+      "version": "3.12-2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "duktape",
+      "version": "2.7.0-7",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "e2fsprogs",
+      "version": "1.47.4-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "expat",
+      "version": "2.8.3-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "file",
+      "version": "5.48-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "filesystem",
+      "version": "2025.10.12-1",
+      "architecture": "any"
+    },
+    {
+      "type": "pkg",
+      "name": "findutils",
+      "version": "4.11.0-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "gawk",
+      "version": "5.4.1-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "gc",
+      "version": "8.2.12-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "gcc-libs",
+      "version": "16.2.1+r23+gd564253eb6c8-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "gdb",
+      "version": "17.2-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "gdb-common",
+      "version": "17.2-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "gdbm",
+      "version": "1.26-2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "gettext",
+      "version": "1.0-2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "glib2",
+      "version": "2.88.3-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "glibc",
+      "version": "2.44+r24+g16be1518495f-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "gmp",
+      "version": "6.3.0-3",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "gnulib-l10n",
+      "version": "20241231-1",
+      "architecture": "any"
+    },
+    {
+      "type": "pkg",
+      "name": "gnutls",
+      "version": "3.8.13-2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "grep",
+      "version": "3.12-2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "grub",
+      "version": "2:2.14-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "guile",
+      "version": "3.0.11-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "gzip",
+      "version": "1.14-2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "hwdata",
+      "version": "0.410-1",
+      "architecture": "any"
+    },
+    {
+      "type": "pkg",
+      "name": "iana-etc",
+      "version": "20260530-1",
+      "architecture": "any"
+    },
+    {
+      "type": "pkg",
+      "name": "icu",
+      "version": "78.3-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "iproute2",
+      "version": "7.1.0-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "iptables",
+      "version": "1:1.8.13-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "iputils",
+      "version": "20250605-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "iw",
+      "version": "6.17-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "jansson",
+      "version": "2.15.0-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "json-c",
+      "version": "0.19-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "kbd",
+      "version": "2.10.0-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "keyutils",
+      "version": "1.6.3-4",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "kmod",
+      "version": "34.2-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "krb5",
+      "version": "1.22.2-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "leancrypto",
+      "version": "1.8.0-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "less",
+      "version": "1:704-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libasan",
+      "version": "16.2.1+r23+gd564253eb6c8-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libatomic",
+      "version": "16.2.1+r23+gd564253eb6c8-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libbpf",
+      "version": "1.7.0-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libcap",
+      "version": "2.78-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libcap-ng",
+      "version": "0.9.3-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libedit",
+      "version": "20260512_3.1-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libelf",
+      "version": "0.195-8",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libevent",
+      "version": "2.1.13-2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libffi",
+      "version": "3.8.0-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libgcc",
+      "version": "16.2.1+r23+gd564253eb6c8-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libgcrypt",
+      "version": "1.12.2-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libgfortran",
+      "version": "16.2.1+r23+gd564253eb6c8-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libgomp",
+      "version": "16.2.1+r23+gd564253eb6c8-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libgpg-error",
+      "version": "1.61-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libhwasan",
+      "version": "16.2.1+r23+gd564253eb6c8-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libidn2",
+      "version": "2.3.8-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libldap",
+      "version": "2.6.13-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "liblsan",
+      "version": "16.2.1+r23+gd564253eb6c8-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libmnl",
+      "version": "1.0.5-2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libnetfilter_conntrack",
+      "version": "1.1.1-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libnfnetlink",
+      "version": "1.0.2-2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libnftnl",
+      "version": "1.3.1-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libnghttp2",
+      "version": "1.70.0-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libnghttp3",
+      "version": "1.18.0-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libngtcp2",
+      "version": "1.25.0-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libnl",
+      "version": "3.12.0-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libnsl",
+      "version": "2.0.1-2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libobjc",
+      "version": "16.2.1+r23+gd564253eb6c8-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libp11-kit",
+      "version": "0.26.5-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libpcap",
+      "version": "1.10.6-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libpsl",
+      "version": "0.21.5-2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libquadmath",
+      "version": "16.2.1+r23+gd564253eb6c8-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libsasl",
+      "version": "2.1.28-5",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libseccomp",
+      "version": "2.6.0-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libssh2",
+      "version": "1.11.1-7",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libstdc++",
+      "version": "16.2.1+r23+gd564253eb6c8-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libsysprof-capture",
+      "version": "50.0-6",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libtasn1",
+      "version": "4.21.0-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libtirpc",
+      "version": "1.3.7-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libtsan",
+      "version": "16.2.1+r23+gd564253eb6c8-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libubsan",
+      "version": "16.2.1+r23+gd564253eb6c8-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libunistring",
+      "version": "1.4.2-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libunwind",
+      "version": "1.8.2-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libverto",
+      "version": "0.3.2-6",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libxcrypt",
+      "version": "4.5.2-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "libxml2",
+      "version": "2.15.3-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "linux",
+      "version": "7.1.8.arch1-3",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "linux-api-headers",
+      "version": "7.1-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "lmdb",
+      "version": "0.9.35-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "lz4",
+      "version": "1:1.10.0-2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "mpdecimal",
+      "version": "4.0.1-3",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "mpfr",
+      "version": "4.2.2-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "nano",
+      "version": "9.1-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "ncurses",
+      "version": "6.6-2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "nettle",
+      "version": "4.0-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "nftables",
+      "version": "1:1.1.6-3",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "openssh",
+      "version": "10.5p1-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "openssl",
+      "version": "3.6.3-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "p11-kit",
+      "version": "0.26.5-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "pam",
+      "version": "1.7.2-2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "pambase",
+      "version": "20260616-1",
+      "architecture": "any"
+    },
+    {
+      "type": "pkg",
+      "name": "pcre2",
+      "version": "10.47-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "polkit",
+      "version": "127-3",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "popt",
+      "version": "1.19-2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "python",
+      "version": "3.14.7-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "readline",
+      "version": "8.3.003-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "sed",
+      "version": "4.10-2",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "shadow",
+      "version": "4.20.0.arch1-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "shim",
+      "version": "16.1-1",
+      "architecture": "any"
+    },
+    {
+      "type": "pkg",
+      "name": "source-highlight",
+      "version": "3.1.9-18",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "sqlite",
+      "version": "3.53.4-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "strace",
+      "version": "7.0-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "systemd",
+      "version": "261.2-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "systemd-libs",
+      "version": "261.2-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "tpm2-tss",
+      "version": "4.1.3-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "tzdata",
+      "version": "2026c-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "util-linux",
+      "version": "2.42.2-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "util-linux-libs",
+      "version": "2.42.2-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "wireless-regdb",
+      "version": "2026.05.30-1",
+      "architecture": "any"
+    },
+    {
+      "type": "pkg",
+      "name": "xxhash",
+      "version": "0.8.3-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "xz",
+      "version": "5.8.3-1",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "zlib",
+      "version": "1:1.3.2-3",
+      "architecture": "x86_64"
+    },
+    {
+      "type": "pkg",
+      "name": "zstd",
+      "version": "1.5.7-3",
+      "architecture": "x86_64"
+    }
+  ],
+  "extension": {}
+}
